@@ -24,6 +24,7 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: "Raleway", sans-serif;
+  background-color: white;
 }
 
 .section {
@@ -356,6 +357,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 #logo {
   height: 50px;
 }
+
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
@@ -388,4 +390,27 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 
 .social a:hover {
   color: #000;
+}
+
+/*--------------------------------------------------------------
+# Custom
+--------------------------------------------------------------*/
+
+.hidden {
+  display: none;
+}
+
+ul {
+  list-style-type: none;
+}
+ul li {
+  margin-top: 10px;
+}
+
+#specials {
+  margin-top: -10%;
+}
+
+main {
+  background-image: url('static/img/wine-bg.jpg');
 }

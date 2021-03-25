@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+ 
+  <title>Cranbrook Liquors</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+ 
+  <!-- Favicons -->
+  <link href="assets/img/favicon.ico" rel="icon">
+ 
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Inconsolata:400,500,600,700|Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+ 
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"> 
+  
+  <!-- Template Main CSS File -->
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <h1>Create New Specials</h1>
+  <div class="container">
+    <ul>
+      <li>
+        <label for="category">Category:</label>
+        <select name="category" id="category-in">
+          <option value="beer">Beer</option>
+          <option value="wine">Wine</option>
+          <option value="spirit">Spirit</option>
+        </select>
+      </li>
+      <li>
+        <label for="brand">Brand:</label>
+        <input name="brand" id="brand-in" type="text">
+      </li>
+      <li>
+        <label for="product">Product:</label>
+        <input name="product" id="product-in" type="text">
+      </li>
+      <li>
+        <label for="amount">Amount:</label>
+        <input name="amount" id="amount-in" min=0 type="number">
+        <label for="unit">Unit:</label>
+        <select name="unit" id="unit-in">
+          <option value="liter">liter</option>
+          <option value="milliliter">ml</option>
+          <option value="ounces">oz</option>
+        </select>
+      </li>
+      <li>
+        <label for="pack">Pack Size:</label>
+        <input name="pack" id="pack-in" min=0 type="number">
+      </li>
+      <li>
+        <label for="medium">Btl/Can:</label>
+        <input name="medium" id="medium-in" type="text">
+      </li>
+      <li>
+        <label for="price">Price: $</label>
+        <input name="price" id="price-in" type="number">
+      </li>
+    </ul>
+    <button type="button" class="btn btn-primary">Submit</button>
+  </div>
+</div>
+
+</body>
+</html>

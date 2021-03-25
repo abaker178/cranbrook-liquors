@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Cranbrook Liquors - {% block title %}{% endblock %}</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{{ url_for('static',filename='img/favicon.ico') }}" rel="icon">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=https://fonts.googleapis.com/css?family=Inconsolata:400,500,600,700|Raleway:400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{{ url_for('static',filename='vendor/aos/aos.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static',filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
+
+  <!-- =======================================================
+  * Template Name: MyPortfolio - v4.0.1
+  * Template URL: https://bootstrapmade.com/myportfolio-bootstrap-portfolio-website-template/
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
+  {% endblock %}
+</head>
+<body>
+  <!-- ======= Navbar ======= -->
+  <nav class="navbar navbar-expand-lg navbar-light py-lg-0">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img id="logo" src="{{ url_for('static', filename='img/logo.png')}}" alt="Cranbrook Liquors Logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item py-0 py-lg-3">
+            <a class="nav-link active" aria-current="page" href="#">Specials</a>
+          </li>
+          <li class="nav-item py-0 py-lg-3">
+            <a class="nav-link" href="community.html">Community</a>
+          </li>
+          <li class="nav-item py-0 py-lg-3">
+            <a class="nav-link" href="staff.html">Staff</a>
+          </li>
+          <li class="nav-item py-0 py-lg-3">
+            <a class="nav-link" href="contact.html">Contact</a>
+          </li>
+        </ul>
+        <ul class="ms-auto navbar-nav">
+          <li class="side-nav nav-item mx-2">
+            <span class="d-none d-lg-inline">(410)666-8248</span>
+            <span class="d-inline d-lg-none"><a class="nav-link" href="tel:4106668248"><i class="bi bi-telephone-fill"></i> Click to Call</a></span>
+          </li>
+          <li class="side-nav nav-item mx-2">
+            <span class="d-none d-lg-inline">52 Cranbrook Rd.<br>Cockeysville, MD 21030</span>
+            <span class="d-inline d-lg-none"><a class="nav-link" href="https://www.google.com/maps/place/Cranbrook+Liquors/@39.464758,-76.637519,17z/data=!3m1!4b1!4m5!3m4!1s0x89c80df0a989af81:0x851438d20bb32178!8m2!3d39.4647539!4d-76.6353303" target="_blank"><i class="bi bi-geo-alt-fill"></i> Map</a></span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======= Content ======= -->
+  <div id="content">{% block content %}{% endblock %}</div>
+  <div id="footer">{% block footer %}{% endblock %}</div>
+  
+  <!-- ======= Scripts ======= -->
+  <script src="{{ url_for('static',filename='vendor/aos/aos.js') }}"></script>
+  <script src="{{ url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='vendor/php-email-form/validate.js') }}"></script>
+  <script src="{{ url_for('static',filename='vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="{{ url_for('static',filename='js/main.js') }}"></script>
+</body>
+</html>
