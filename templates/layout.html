@@ -46,13 +46,13 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item py-0 py-lg-3">
-            <a class="nav-link active" aria-current="page" href="#">Specials</a>
+            <a class="nav-link active" aria-current="page" href="/">Specials</a>
           </li>
           <li class="nav-item py-0 py-lg-3">
             <a class="nav-link" href="community.html">Community</a>
           </li>
           <li class="nav-item py-0 py-lg-3">
-            <a class="nav-link" href="staff.html">Staff</a>
+            <a class="nav-link" href="staff">Staff</a>
           </li>
           <li class="nav-item py-0 py-lg-3">
             <a class="nav-link" href="contact.html">Contact</a>
@@ -74,7 +74,19 @@
 
   <!-- ======= Content ======= -->
   <div id="content">{% block content %}{% endblock %}</div>
-  <div id="footer">{% block footer %}{% endblock %}</div>
+  
+  <!-- ======= Footer ======= -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 social mt-3 text-center">
+          <a href="https://www.facebook.com/cranbrookliquors"><span class="bi bi-facebook"></span></a>
+          <a href="https://www.instagram.com/cranbrookliquors/"><span class="bi bi-instagram"></span></a>
+          <a href="https://twitter.com/cranbrookliquo1"><span class="bi bi-twitter"></span></a>
+        </div>
+      </div>
+    </div>
+  </footer>
   
   <!-- ======= Scripts ======= -->
   <script src="{{ url_for('static',filename='vendor/aos/aos.js') }}"></script>

@@ -24,7 +24,6 @@ a:hover {
 
 h1, h2, h3, h4, h5, h6, .font-heading {
   font-family: "Raleway", sans-serif;
-  background-color: white;
 }
 
 .section {
@@ -407,10 +406,11 @@ ul li {
   margin-top: 10px;
 }
 
-#specials {
-  margin-top: -10%;
+.whitebg {
+  background-color: white;
+  border-radius: 5;
 }
 
 main {
-  background-image: url('static/img/wine-bg.jpg');
+  background-image: url("../img/wine-bg.jpg");
 }
