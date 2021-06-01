@@ -1,13 +1,12 @@
 from flask import Flask, render_template
 from flask_pymongo import PyMongo
 from datetime import datetime as dt
-from config import u,p
 
 app = Flask(__name__)
 
 @app.route("/")
 def home():
-    app.config["MONGO_URI"] = f"mongodb+srv://{u}:{p}@cranbrook.afp5d.mongodb.net/specials?retryWrites=true&w=majority"
+    app.config["MONGO_URI"] = f"mongodb+srv://website:v2ZdmFKbXTW5uRw@cranbrook.afp5d.mongodb.net/specials?retryWrites=true&w=majority"
     mongo = PyMongo(app)
     
     month = dt.now().strftime("%B")
@@ -19,7 +18,7 @@ def home():
 
 @app.route("/staff")
 def staff():
-    app.config["MONGO_URI"] = f"mongodb+srv://{u}:{p}@cranbrook.afp5d.mongodb.net/staffDB?retryWrites=true&w=majority"
+    app.config["MONGO_URI"] = f"mongodb+srv://website:v2ZdmFKbXTW5uRw@cranbrook.afp5d.mongodb.net/staffDB?retryWrites=true&w=majority"
     mongo = PyMongo(app)
 
     today = dt.today()
