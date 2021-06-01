@@ -87,14 +87,6 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.4);
-  visibility: hidden;
-  opacity: 0;
-  transition: .3s all ease-in-out;
-}
-
-.item .item-wrap img {
-  transition: .3s transform ease;
-  transform: scale(1);
 }
 
 .item .item-wrap > .work-info {
@@ -112,8 +104,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 }
 
 .item .item-wrap > .work-info h3 {
-  font-size: 20px;
+  font-size: 30px;
   margin-bottom: 0;
+}
+
+.item .item-wrap > .work-info .item-price {
+  font-size: 18px;
 }
 
 .item .item-wrap > .work-info span {
@@ -122,20 +118,12 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   letter-spacing: .2rem;
 }
 
-.item .item-wrap:hover {
-  text-decoration: none;
-}
-
-.item .item-wrap:hover img {
-  transform: scale(1.05);
-}
-
-.item .item-wrap:hover:after {
+.item .item-wrap:after {
   opacity: 1;
   visibility: visible;
 }
 
-.item .item-wrap:hover .work-info {
+.item .item-wrap .work-info {
   margin-top: 0px;
   opacity: 1;
   visibility: visible;

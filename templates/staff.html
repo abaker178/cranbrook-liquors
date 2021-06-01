@@ -4,6 +4,7 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block nav_staff %}active{% endblock %}
 
 <!-- ======= Content ======= -->
 {% block content %}
@@ -17,7 +18,7 @@
             <div class="row">
               {% for emp in staff %}
                 <div class="card col-md-3 m-2">
-                  <img src="/static/img/{{ emp.name }}.jpg" class="card-img-top" alt="{{ emp.name }}">
+                  <img src="/static/img/staff/{{ emp.name }}.jpg" class="card-img-top" alt="{{ emp.name }}">
                   <div class="card-body">
                     <h5 class="card-title text-center">{{ emp.name }}</h5>
                     <h6 class="card-title text-center">{{ emp.position }}</h6>

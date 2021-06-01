@@ -15,7 +15,7 @@ def home():
     beer = mongo.db[coll].find({"category": "beer"})
     wine = mongo.db[coll].find({"category": "wine"})
     spirit = mongo.db[coll].find({"category": "spirit"})
-    return render_template("index.html", month=month, beer=beer, wine=wine, spirit=spirit)
+    return render_template("specials.html", month=month, beer=beer, wine=wine, spirit=spirit)
 
 @app.route("/staff")
 def staff():

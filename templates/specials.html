@@ -4,16 +4,14 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
+{% block nav_spec %}active{% endblock %}
 
 <!-- ======= Content ======= -->
 {% block content %}
   <main id="main">
-    <section class="site-portfolio">
-      <div class="container mt-3">
-        <!-- <div id="hero" class="row justify-content-center">
-          <img class="img-fluid" src="{{ url_for('static', filename='img/wine.jpg')}}">
-        </div> -->
-        <div id="specials" class="whitebg row align-items-center mt-3">
+    <section>
+      <div class="container">
+        <div id="specials" class="whitebg row align-items-center">
           <div class="col-md-12 col-lg-6 mb-lg-0">
             <h2>{{ month }} Specials</h2>
           </div>
@@ -29,43 +27,43 @@
         <div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="100">
           <!-- BEER -->
           {% for item in beer %}
-          <div class="item {{ item.category }} col-sm-6 col-md-4 col-lg-4 mt-4">
-            <a href="work-single.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>{{ item.product }}</h3>
-                <div>{{ item.xpack }}-pack {{ item.volume.amount }}{{ item.volume.unit }} {{ item.medium }}</div>
-                <div>${{ item.price }}</div>
+            <div class="item beer col-sm-6 col-md-3 col-lg-3 mt-4">
+              <div class="item-wrap fancybox">
+                <div class="work-info">
+                  <h3>{{ item.product }}</h3>
+                  <div class="item-desc">{{ item.xpack }}-pack {{ item.volume.amount }}{{ item.volume.unit }} {{ item.medium }}</div>
+                  <div class="item-price">${{ item.price }}</div>
+                </div>
+                <img class="img-fluid" src="/static/img/specials/{{ item.category }}/{{ item.image }}.jpg">
               </div>
-              <img class="img-fluid" src="{{ item.image }}">
-            </a>
-          </div>
+            </div>
           {% endfor %}
 
           <!-- WINE -->
           {% for item in wine %}
-          <div class="item {{ item.category }} col-sm-6 col-md-4 col-lg-4 mt-4">
-            <a href="work-single.html" class="item-wrap fancybox">
-              <div class="work-info">
-                <h3>{{ item.product }}</h3>
-                <div>{{ item.volume.amount }}{{ item.volume.unit }} {{ item.varietals|join(', ') }}</div>
-                <div>${{ item.price }}</div>
+            <div class="item wine col-sm-6 col-md-3 col-lg-3 mt-4">
+              <div class="item-wrap fancybox">
+                <div class="work-info">
+                  <h3>{{ item.product }}</h3>
+                  <div class="item-desc">{{ item.volume.amount }}{{ item.volume.unit }} {{ item.varietals|join(', ') }}</div>
+                  <div class="item-price">${{ item.price }}</div>
+                </div>
+                <img class="img-fluid" src="/static/img/specials/{{ item.category }}/{{ item.image }}.jpg">
               </div>
-              <img class="img-fluid" src="{{ item.image }}">
-            </a>
-          </div>
+            </div>
           {% endfor %}
           
           <!-- SPIRIT -->
           {% for item in spirit %}
-          <div class="item {{ item.category }} col-sm-6 col-md-4 col-lg-4 mt-4">
-            <a href="work-single.html" class="item-wrap fancybox">
+          <div class="item spirit col-sm-6 col-md-3 col-lg-3 mt-4">
+            <div class="item-wrap fancybox">
               <div class="work-info">
                 <h3>{{ item.product }}</h3>
-                <div>{{ item.volume.amount }}{{ item.volume.unit }}</div>
-                <div>${{ item.price }}</div>
+                <div class="item-desc">{{ item.volume.amount }}{{ item.volume.unit }}</div>
+                <div class="item-price">${{ item.price }}</div>
               </div>
-              <img class="img-fluid" src="{{ item.image }}">
-            </a>
+              <img class="img-fluid" src="/static/img/specials/{{ item.category }}/{{ item.image }}.jpg">
+            </div>
           </div>
           {% endfor %}
 
