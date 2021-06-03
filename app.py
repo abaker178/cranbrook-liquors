@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 
 @app.route("/")
 def home():
-    return jsonify(db)
+    return "IT'S ALIVE"
 
 @app.route("/specials")
 def specials():    
