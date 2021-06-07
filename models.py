@@ -8,7 +8,7 @@ def create_beer(db):
         product = db.Column(db.String(64))
         volAmt = db.Column(db.Float)
         volUnit = db.Column(db.String(32))
-        xpack = db.Column(db.Int)
+        xpack = db.Column(db.Integer)
         medium = db.Column(db.String(64))
         price = db.Column(db.Float)
         image = db.Column(db.String(32))

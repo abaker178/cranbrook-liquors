@@ -1,0 +1,61 @@
+<!-- Extend base layout template -->
+{% extends 'layout.html' %}
+{% block title %}Create New Special{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block nav_spec %}active{% endblock %}
+
+<!-- ======= Content ======= -->
+{% block content %}
+<div class="container">
+  <h1>Create New Specials</h1>
+  <div class="container">
+    <table>
+      <tr>
+        <td><label for="category">Category:</label></td>
+        <td>
+          <select name="category" id="category-in">
+            <option value="beer">Beer</option>
+            <option value="wine">Wine</option>
+            <option value="spirit">Spirit</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="brand">Brand:</label></td>
+        <td><input name="brand" id="brand" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="product">Product:</label></td>
+        <td><input name="product" id="product" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="amount">Amount:</label></td>
+        <td><input name="amount" id="volAmt" min=0 type="number"></td>
+        <td><label for="unit">Unit:</label></td>
+        <td>
+          <select name="unit" id="volUnit">
+            <option value="liter">liter</option>
+            <option value="ml">ml</option>
+            <option value="oz">oz</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="pack">Pack Size:</label></td>
+        <td><input name="pack" id="xpack" min=0 type="number"></td>
+      </tr>
+      <tr>
+        <td><label for="medium">Btl/Can:</label></td>
+        <td><input name="medium" id="medium" type="text"></td>
+      </tr>
+      <tr>
+        <td><label for="price">Price: $</label></td>
+        <td><input name="price" id="price" type="number"></td>
+      </tr>
+    </table>
+    <button type="button" class="btn btn-primary" disabled>Submit</button>
+  </div>
+</div>
+{% endblock %}
