@@ -15,12 +15,12 @@
     <!-- New Special Input -->
     <div class="col-8 container-fluid">
 
-      <form>
+      <form class="needs-validation" novalidate>
         
         <!-- Category -->
         <div class="mb-3 beer wine spirits">
           <label for="category" class="form-label">Category</label>
-          <select class="form-control" id="category" onchange="updateFields(this.value)">
+          <select class="form-select" id="category" onchange="updateFields(this.value)">
             <option value="beer">Beer</option>
             <option value="wine">Wine</option>
             <option value="spirit">Spirit</option>
@@ -30,13 +30,15 @@
         <!-- Brand -->
         <div class="mb-3 beer wine spirits">
           <label for="brand" class="form-label">Brand</label>
-          <input type="text" class="form-control input-field" id="brand">
+          <input type="text" class="form-control" id="brand" required>
+          <div class="invalid-feedback">Please provide the Brand (e.g. "Tito's" or "Dogfish Head")</div>
         </div>
 
         <!-- Product -->
         <div class="mb-3 beer wine spirits">
           <label for="product" class="form-label">Product</label>
-          <input type="text" class="form-control input-field" id="product">
+          <input type="text" class="form-control" id="product" required>
+          <div class="invalid-feedback">Please provide the Product (e.g. "Vodka" or "60 Min.")</div>
         </div>
 
         <!-- Volume -->
@@ -44,10 +46,11 @@
           <label for="volume" class="form-label">Volume</label>
           <div class="row g-3">
             <div class="col-auto">
-              <input type="number" min=1 class="form-control input-field" id="vol-amount">
+              <input type="number" min=1 class="form-control" id="vol-amount" required>
+              <div class="invalid-feedback">Please provide the Volume amount (e.g. "1.75" or "750")</div>
             </div>
             <div class="col-auto">
-              <select class="col-auto form-control" id="vol-unit">
+              <select class="col-auto form-select" id="vol-unit">
                 <option value="L">liters</option>
                 <option value="ml">milliliters</option>
                 <option value="oz">ounces</option>
@@ -57,28 +60,30 @@
         </div>
 
         <!-- Pack Size (Beer only) -->
-        <div class="mb-3 beer">
-          <label for="xpack">Pack Size</label>
-          <input type="number" min=0 class="form-control input-field" id="xpack">
+        <div class="mb-3 field beer">
+          <label for="xpack" class="form-label">Pack Size</label>
+          <input type="number" min=0 class="form-control" id="xpack" required>
+          <div class="invalid-feedback">Please provide the Pack Size (e.g. "6" or "12")</div>
         </div>
 
         <!-- Medium (Beer only) -->
-        <div class="mb-3 beer">
+        <div class="mb-3 field beer">
           <label for="medium" class="form-label">Container</label>
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="bottles">
+            <input class="form-check-input container-type" type="checkbox" id="bottles" onchange="checkContainer(this.id)" checked>
             <label class="form-check-label" for="bottles">Bottles</label>
           </div>
           <div class="form-check form-switch">
-            <input class="form-check-input" type="checkbox" id="cans">
+            <input class="form-check-input container-type" type="checkbox" id="cans" onchange="checkContainer(this.id)">
             <label class="form-check-label" for="cans">Cans</label>
           </div>
         </div>
 
         <!-- Varietals (Wine only) -->
-        <div class="mb-3 wine">
+        <div class="mb-3 field wine">
           <label for="varietals" class="form-label">Varietals</label>
-          <input type="text" class="form-control input-field" id="varietals">
+          <input type="text" class="form-control" id="varietals" required>
+          <div class="invalid-feedback">Please provide the Varietals separated by a comma (e.g. "Sauv. Blanc, Cab, and Chard.")</div>
         </div>
 
         <!-- Price -->
@@ -86,7 +91,8 @@
           <label for="price" class="form-label">Price</label>
           <div class="input-group">
             <span class="input-group-text">$</span>
-            <input type="number" class="form-control input-field">
+            <input type="number" class="form-control" required>
+            <div class="invalid-feedback">Please provide the Price (e.g. "12.99")</div>
           </div>
         </div>
 
@@ -99,11 +105,12 @@
         <!-- Month -->
         <div class="mb-3 beer wine spirits">
           <label for="month">Month</label>
-          <input class="form-control input-field" type="month" id="month">
+          <input class="form-control" type="month" id="month" required>
+          <div class="invalid-feedback">Please select the Month for which this special is valid</div>
         </div>
 
         <!-- Submit -->
-        <button type="submit" class="btn btn-primary" disabled>Submit</button>
+        <button type="submit" class="btn btn-primary">Submit</button>
       </form>
     </div>
 
@@ -111,4 +118,10 @@
     <!-- INSERT CODE HERE -->
   </div>
 </div>
+{% endblock %}
+
+<!-- Additional Scripts -->
+{% block add_scripts %}
+<script src="{{ url_for('static',filename='js/new-special.js') }}"></script>"
+<script>updateFields("beer")</script> <!-- load initial fields -->
 {% endblock %}
