@@ -27,7 +27,7 @@ Spirit = create_spirit(db)
 # Home
 @app.route("/")
 def home():
-    return "IT'S ALIVE"
+    return "<a href='/post/special'>New Special</a>"
 
 # Specials
 @app.route("/specials")
@@ -40,7 +40,7 @@ def specials():
     return render_template("specials.html", month=month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
-@app.route("/post/specials", methods=["GET", "POST"])
+@app.route("/post/special", methods=["GET", "POST"])
 def new_special():
     # When form is submitted
     if request.method == "POST":
@@ -48,8 +48,8 @@ def new_special():
         category = request.form["category"]
         brand = request.form["brand"]
         product = request.form["product"]
-        volAmt = request.form["volAmt"]
-        volUnit = request.form["volUnit"]
+        volAmt = request.form["vol-amount"]
+        volUnit = request.form["vol-unit"]
         price = request.form["price"]
         image = "stock" if request.form["image"] == "" else request.form["image"]
 
@@ -72,7 +72,6 @@ def new_special():
         ## WINE
         elif category == "wine":
             varietals = request.form["varietals"]
-            medium = request.form["medium"]
             special = Wine(
                 category=category,
                 brand=brand,
@@ -80,7 +79,6 @@ def new_special():
                 volAmt=volAmt,
                 volUnit=volUnit,
                 varietals=varietals,
-                medium=medium,
                 price=price,
                 image=image)
         

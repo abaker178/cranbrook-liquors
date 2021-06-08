@@ -8,54 +8,107 @@
 
 <!-- ======= Content ======= -->
 {% block content %}
+
 <div class="container">
-  <h1>Create New Specials</h1>
-  <div class="container">
-    <table>
-      <tr>
-        <td><label for="category">Category:</label></td>
-        <td>
-          <select name="category" id="category-in">
+  <h1>Create New Special</h1>
+  <div class="row">
+    <!-- New Special Input -->
+    <div class="col-8 container-fluid">
+
+      <form>
+        
+        <!-- Category -->
+        <div class="mb-3 beer wine spirits">
+          <label for="category" class="form-label">Category</label>
+          <select class="form-control" id="category" onchange="updateFields(this.value)">
             <option value="beer">Beer</option>
             <option value="wine">Wine</option>
             <option value="spirit">Spirit</option>
           </select>
-        </td>
-      </tr>
-      <tr>
-        <td><label for="brand">Brand:</label></td>
-        <td><input name="brand" id="brand" type="text"></td>
-      </tr>
-      <tr>
-        <td><label for="product">Product:</label></td>
-        <td><input name="product" id="product" type="text"></td>
-      </tr>
-      <tr>
-        <td><label for="amount">Amount:</label></td>
-        <td><input name="amount" id="volAmt" min=0 type="number"></td>
-        <td><label for="unit">Unit:</label></td>
-        <td>
-          <select name="unit" id="volUnit">
-            <option value="liter">liter</option>
-            <option value="ml">ml</option>
-            <option value="oz">oz</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <td><label for="pack">Pack Size:</label></td>
-        <td><input name="pack" id="xpack" min=0 type="number"></td>
-      </tr>
-      <tr>
-        <td><label for="medium">Btl/Can:</label></td>
-        <td><input name="medium" id="medium" type="text"></td>
-      </tr>
-      <tr>
-        <td><label for="price">Price: $</label></td>
-        <td><input name="price" id="price" type="number"></td>
-      </tr>
-    </table>
-    <button type="button" class="btn btn-primary" disabled>Submit</button>
+        </div>
+        
+        <!-- Brand -->
+        <div class="mb-3 beer wine spirits">
+          <label for="brand" class="form-label">Brand</label>
+          <input type="text" class="form-control input-field" id="brand">
+        </div>
+
+        <!-- Product -->
+        <div class="mb-3 beer wine spirits">
+          <label for="product" class="form-label">Product</label>
+          <input type="text" class="form-control input-field" id="product">
+        </div>
+
+        <!-- Volume -->
+        <div class="mb-3 beer wine spirits">
+          <label for="volume" class="form-label">Volume</label>
+          <div class="row g-3">
+            <div class="col-auto">
+              <input type="number" min=1 class="form-control input-field" id="vol-amount">
+            </div>
+            <div class="col-auto">
+              <select class="col-auto form-control" id="vol-unit">
+                <option value="L">liters</option>
+                <option value="ml">milliliters</option>
+                <option value="oz">ounces</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pack Size (Beer only) -->
+        <div class="mb-3 beer">
+          <label for="xpack">Pack Size</label>
+          <input type="number" min=0 class="form-control input-field" id="xpack">
+        </div>
+
+        <!-- Medium (Beer only) -->
+        <div class="mb-3 beer">
+          <label for="medium" class="form-label">Container</label>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="bottles">
+            <label class="form-check-label" for="bottles">Bottles</label>
+          </div>
+          <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="cans">
+            <label class="form-check-label" for="cans">Cans</label>
+          </div>
+        </div>
+
+        <!-- Varietals (Wine only) -->
+        <div class="mb-3 wine">
+          <label for="varietals" class="form-label">Varietals</label>
+          <input type="text" class="form-control input-field" id="varietals">
+        </div>
+
+        <!-- Price -->
+        <div class="mb-3 beer wine spirits">
+          <label for="price" class="form-label">Price</label>
+          <div class="input-group">
+            <span class="input-group-text">$</span>
+            <input type="number" class="form-control input-field">
+          </div>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-3 beer wine spirits">
+          <label for="image" class="form-label">Product Image (stock imagery will be used if not provided)</label>
+          <input class="form-control" type="file" id="image">
+        </div>
+        
+        <!-- Month -->
+        <div class="mb-3 beer wine spirits">
+          <label for="month">Month</label>
+          <input class="form-control input-field" type="month" id="month">
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="btn btn-primary" disabled>Submit</button>
+      </form>
+    </div>
+
+    <!-- New Special Preview -->
+    <!-- INSERT CODE HERE -->
   </div>
 </div>
 {% endblock %}

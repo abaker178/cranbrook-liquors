@@ -28,7 +28,6 @@ def create_wine(db):
         volAmt = db.Column(db.Float)
         volUnit = db.Column(db.String(32))
         varietals = db.Column(db.String(64))
-        medium = db.Column(db.String(64))
         price = db.Column(db.Float)
         image = db.Column(db.String(32))
 
