@@ -13,7 +13,7 @@
   <h1>Create New Special</h1>
   <div class="row">
     <!-- New Special Input -->
-    <div class="col-8 container-fluid">
+    <div class="col-12 col-md-8 container-fluid">
 
       <form class="needs-validation" novalidate>
         
@@ -46,7 +46,7 @@
           <label for="volume" class="form-label">Volume</label>
           <div class="row g-3">
             <div class="col-auto">
-              <input type="number" min=1 class="form-control" id="vol-amount" required>
+              <input type="number" min=1 step="0.01" class="form-control" id="vol-amount" required>
               <div class="invalid-feedback">Please provide the Volume amount (e.g. "1.75" or "750")</div>
             </div>
             <div class="col-auto">
@@ -62,7 +62,7 @@
         <!-- Pack Size (Beer only) -->
         <div class="mb-3 field beer">
           <label for="xpack" class="form-label">Pack Size</label>
-          <input type="number" min=0 class="form-control" id="xpack" required>
+          <input type="number" min=1 class="form-control" id="xpack" required>
           <div class="invalid-feedback">Please provide the Pack Size (e.g. "6" or "12")</div>
         </div>
 
@@ -91,7 +91,7 @@
           <label for="price" class="form-label">Price</label>
           <div class="input-group">
             <span class="input-group-text">$</span>
-            <input type="number" class="form-control" required>
+            <input type="number" step="0.01" class="form-control" required>
             <div class="invalid-feedback">Please provide the Price (e.g. "12.99")</div>
           </div>
         </div>
@@ -115,13 +115,22 @@
     </div>
 
     <!-- New Special Preview -->
-    <!-- INSERT CODE HERE -->
+    <div class="item col-12 col-md-4 mt-4 mx-auto">
+      <div class="item-wrap fancybox">
+        <div class="work-info">
+          <h3>brand and product</h3>
+          <div class="item-desc">6-pack 12oz cans</div>
+          <div class="item-price">$12.99</div>
+        </div>
+        <img class="img-fluid" src="/static/img/specials/beer/stock.jpg">
+      </div>
+    </div>
   </div>
 </div>
 {% endblock %}
 
 <!-- Additional Scripts -->
 {% block add_scripts %}
-<script src="{{ url_for('static',filename='js/new-special.js') }}"></script>"
+<script src="{{ url_for('static',filename='js/new-special.js') }}"></script>
 <script>updateFields("beer")</script> <!-- load initial fields -->
 {% endblock %}
