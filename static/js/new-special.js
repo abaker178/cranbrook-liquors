@@ -25,11 +25,17 @@
 function updateFields(category) {
     let fields = document.querySelectorAll(".field")
     Array.prototype.slice.call(fields)
-        .forEach(field => field.style.display = "none");
+        .forEach(field => {
+            field.style.display = "none";
+            field.classList.remove("active");
+        });
     
     let fieldsOfSelected = document.querySelectorAll("."+category);
     Array.prototype.slice.call(fieldsOfSelected)
-        .forEach(field => field.style.display = "block");
+        .forEach(field => {
+            field.style.display = "block";
+            field.classList.add("active");
+        });
 };
 
 /*** FOR BEER ***/
