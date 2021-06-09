@@ -98,8 +98,8 @@
 
         <!-- Image -->
         <div class="mb-3 beer wine spirits">
-          <label for="image" class="form-label">Product Image (stock imagery will be used if not provided)</label>
-          <input class="form-control" type="file" id="image">
+          <label for="image-upload" class="form-label">Product Image (stock imagery will be used if not provided)</label>
+          <input class="form-control" type="file" id="image-upload" oninput="readURL(this)">
         </div>
         
         <!-- Month -->
@@ -122,7 +122,7 @@
           <div class="item-desc">6-pack 12oz cans</div>
           <div class="item-price">$12.99</div>
         </div>
-        <img class="img-fluid" src="/static/img/specials/beer/stock.jpg">
+        <img id="item-image" class="img-fluid" src="/static/img/specials/beer/stock.jpg">
       </div>
     </div>
   </div>
