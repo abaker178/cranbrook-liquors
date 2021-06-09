@@ -26,13 +26,18 @@ function updateFields(category) {
     // Turn off all fields
     let fields = document.querySelectorAll(".field")
     Array.prototype.slice.call(fields)
-        .forEach(field => field.style.display = "none");
+        .forEach(field => {
+            field.style.display = "none";
+            field.classList.remove("active");
+        });
     
     // Only show fields that are an aspect of the chosen category
     let fieldsOfSelected = document.querySelectorAll("."+category);
     Array.prototype.slice.call(fieldsOfSelected)
-        .forEach(field => field.style.display = "block");
-
+        .forEach(field => {
+            field.style.display = "block";
+            field.classList.add("active");
+        });
     // Update the background image for the WYSIWYG
     let itemImageEle = document.getElementById("item-image");
     let itemImageURLList = itemImageEle.src.split("/");
