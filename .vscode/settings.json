@@ -4,5 +4,6 @@
         "readmore",
         "swiper",
         "xpack"
-    ]
+    ],
+    "python.pythonPath": "C:\\Users\\user\\anaconda3\\python.exe"
 }
