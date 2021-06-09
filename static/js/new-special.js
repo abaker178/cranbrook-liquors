@@ -9,13 +9,15 @@
     // Loop over them and prevent submission
     Array.prototype.slice.call(forms)
         .forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault()
-                    event.stopPropagation()
-                }
-                form.classList.add('was-validated')
-            }, false)
+            if (form.classList.contains("active")) {
+                form.addEventListener('submit', event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            }
         })
 })()
 /*** End Form validation code from https://getbootstrap.com/docs/5.0/forms/validation/ ***/
@@ -32,7 +34,7 @@ function updateFields(category) {
         });
     
     // Only show fields that are an aspect of the chosen category
-    let fieldsOfSelected = document.querySelectorAll("."+category);
+    let fieldsOfSelected = document.querySelectorAll("." + category);
     Array.prototype.slice.call(fieldsOfSelected)
         .forEach(field => {
             field.style.display = "block";
