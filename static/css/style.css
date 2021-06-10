@@ -112,12 +112,6 @@ h1, h2, h3, h4, h5, h6, .font-heading {
   font-size: 18px;
 }
 
-.item .item-wrap > .work-info span {
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: .2rem;
-}
-
 .item .item-wrap:after {
   opacity: 1;
   visibility: visible;
@@ -401,4 +395,9 @@ ul li {
 
 main {
   background-image: url("../img/wine-bg.jpg");
+}
+
+.form-label.required:before {
+  content:"*";
+  color:red;
 }
