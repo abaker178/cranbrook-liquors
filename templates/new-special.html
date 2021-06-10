@@ -15,7 +15,7 @@
     <!-- New Special Input -->
     <div class="col-12 col-md-8 container-fluid">
 
-      <form class="needs-validation" novalidate>
+      <form id="special-form" @submit="checkForm" novalidate>
         
         <!-- Category -->
         <div class="mb-3 beer wine spirits">
