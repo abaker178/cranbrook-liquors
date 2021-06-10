@@ -66,17 +66,33 @@ function readURL(input) {
 
 /*** FOR BEER ***/
 // Make sure either Bottles or Cans is selected at all times
-function checkContainer(clicked) {
-    let containerRadios = document.getElementsByClassName("container-type");
-    let elementChecked = false;
-    for(let radio of containerRadios) {
-        if(radio.checked) {
-            elementChecked = true;
-            break;
-        } 
-    };
-    if(!elementChecked) {
-        let notClicked = clicked === "bottles" ? "cans" : "bottles";
-        document.getElementById(notClicked).checked = true;
-    }
-}
+// function checkContainer(clicked) {
+//     let containerRadios = document.getElementsByClassName("container-type");
+//     let elementChecked = false;
+//     for(let radio of containerRadios) {
+//         if(radio.checked) {
+//             elementChecked = true;
+//             break;
+//         } 
+//     };
+//     if(!elementChecked) {
+//         let notClicked = clicked === "bottles" ? "cans" : "bottles";
+//         document.getElementById(notClicked).checked = true;
+//     }
+// }
+
+/*** Vue.js Code to dynamically populate the Preview Section ***/
+var specialForm = new Vue({
+    el: '#special-form',
+    data: {
+        brand: "",
+        product: "",
+        xpack: 6,
+        volAmt: 12,
+        volUnit: "oz",
+        bottles: true,
+        cans: false,
+        price: ""
+    },
+    delimiters: ["[[ "," ]]"]
+});

@@ -11,11 +11,11 @@
 
 <div class="container">
   <h1>Create New Special</h1>
-  <div class="row">
+  <div id="special-form" class="row">
     <!-- New Special Input -->
     <div class="col-12 col-md-8 container-fluid">
 
-      <form id="special-form" novalidate>
+      <form novalidate>
         
         <!-- Category -->
         <div class="mb-3 beer wine spirits">
@@ -29,70 +29,70 @@
         
         <!-- Brand -->
         <div class="mb-3 beer wine spirits">
-          <label for="brand" class="form-label">Brand</label>
-          <input type="text" class="form-control" id="brand" required>
-          <div class="invalid-feedback">Please provide the Brand (e.g. "Tito's" or "Dogfish Head")</div>
+          <label for="brand" class="form-label">Brand (e.g. "Tito's" or "Dogfish Head")</label>
+          <input type="text" class="form-control" id="brand" v-model="brand" required>
+          <div class="invalid-feedback">Please provide the Brand</div>
         </div>
 
         <!-- Product -->
         <div class="mb-3 beer wine spirits">
-          <label for="product" class="form-label">Product</label>
-          <input type="text" class="form-control" id="product" required>
-          <div class="invalid-feedback">Please provide the Product (e.g. "Vodka" or "60 Min.")</div>
-        </div>
-
-        <!-- Volume -->
-        <div class="mb-3 beer wine spirits">
-          <label for="volume" class="form-label">Volume</label>
-          <div class="row g-3">
-            <div class="col-auto">
-              <input type="number" min=1 step="0.01" class="form-control" id="vol-amount" required>
-              <div class="invalid-feedback">Please provide the Volume amount (e.g. "1.75" or "750")</div>
-            </div>
-            <div class="col-auto">
-              <select class="col-auto form-select" id="vol-unit">
-                <option value="L">liters</option>
-                <option value="ml">milliliters</option>
-                <option value="oz">ounces</option>
-              </select>
-            </div>
-          </div>
+          <label for="product" class="form-label">Product (e.g. "Vodka" or "60 Min.")</label>
+          <input type="text" class="form-control" id="product" v-model="product" required>
+          <div class="invalid-feedback">Please provide the Product</div>
         </div>
 
         <!-- Pack Size (Beer only) -->
         <div class="mb-3 toggle-visible beer">
-          <label for="xpack" class="form-label">Pack Size</label>
-          <input type="number" min=1 class="form-control toggle-required" id="xpack" required>
-          <div class="invalid-feedback">Please provide the Pack Size (e.g. "6" or "12")</div>
+          <label for="xpack" class="form-label">Pack Size (e.g. "6" or "12")</label>
+          <input type="number" min=1 class="form-control toggle-required" id="xpack" v-model="xpack" required>
+          <div class="invalid-feedback">Please provide the Pack Size</div>
+        </div>
+
+        <!-- Volume -->
+        <div class="mb-3 beer wine spirits">
+          <label for="volume" class="form-label">Volume (e.g. "1.75 L" or "750 ml")</label>
+          <div class="row g-3">
+            <div class="col-auto">
+              <input type="number" min=1 step="0.01" class="form-control" id="vol-amount" v-model="volAmt" required>
+              <div class="invalid-feedback">Please provide the Volume amount</div>
+            </div>
+            <div class="col-auto">
+              <select class="col-auto form-select" id="vol-unit" v-model="volUnit">
+                <option value="L">L</option>
+                <option value="ml">ml</option>
+                <option value="oz">oz</option>
+              </select>
+            </div>
+          </div>
         </div>
 
         <!-- Container (Beer only) -->
         <div class="mb-3 beer">
           <label for="container" class="form-label">Container</label>
           <div class="form-check form-switch">
-            <input class="form-check-input container-type" type="checkbox" id="bottles" onchange="checkContainer(this.id)" checked>
+            <input class="form-check-input container-type" type="checkbox" id="bottles" v-model="bottles" checked>
             <label class="form-check-label" for="bottles">Bottles</label>
           </div>
           <div class="form-check form-switch">
-            <input class="form-check-input container-type" type="checkbox" id="cans" onchange="checkContainer(this.id)">
+            <input class="form-check-input container-type" type="checkbox" id="cans" v-model="cans">
             <label class="form-check-label" for="cans">Cans</label>
           </div>
         </div>
 
         <!-- Varietals (Wine only) -->
         <div class="mb-3 toggle-visible wine">
-          <label for="varietals" class="form-label">Varietals</label>
+          <label for="varietals" class="form-label">Varietals (e.g. "Cab and Chard." or "All Types")</label>
           <input type="text" class="form-control toggle-required" id="varietals" required>
-          <div class="invalid-feedback">Please provide the Varietals separated by a comma (e.g. "Sauv. Blanc, Cab, and Chard.")</div>
+          <div class="invalid-feedback">Please provide the list of Varietals</div>
         </div>
 
         <!-- Price -->
         <div class="mb-3 beer wine spirits">
-          <label for="price" class="form-label">Price</label>
+          <label for="price" class="form-label">Price (e.g. "12.99")</label>
           <div class="input-group">
             <span class="input-group-text">$</span>
-            <input type="number" step="0.01" class="form-control" required>
-            <div class="invalid-feedback">Please provide the Price (e.g. "12.99")</div>
+            <input type="number" step="0.01" class="form-control" v-model="price" required>
+            <div class="invalid-feedback">Please provide the Price</div>
           </div>
         </div>
 
@@ -116,11 +116,12 @@
 
     <!-- New Special Preview -->
     <div class="item col-12 col-md-4 mt-4 mx-auto">
+      <h3>Site Preview</h3>
       <div class="item-wrap fancybox">
-        <div class="work-info">
-          <h3>brand and product</h3>
-          <div class="item-desc">6-pack 12oz cans</div>
-          <div class="item-price">$12.99</div>
+        <div id="preview" class="work-info">
+          <h3 class="text-capitalize">[[ brand ]] [[ product ]]</h3>
+          <div class="item-desc">[[ xpack ]]-pack [[ volAmt ]][[ volUnit ]] [[ bottles ? "bottles" : "" ]]<span v-if="bottles && cans"> & </span>[[ cans ? "cans" : "" ]]</div>
+          <div class="item-price">$[[ price ]]</div>
         </div>
         <img id="item-image" class="img-fluid" src="/static/img/specials/beer/stock.jpg">
       </div>

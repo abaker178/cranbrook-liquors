@@ -117,4 +117,4 @@ def staff():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
