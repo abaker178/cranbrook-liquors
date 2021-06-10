@@ -57,7 +57,8 @@ def new_special():
         ## BEER
         if category == "beer":
             xpack = request.form["xpack"]
-            medium = request.form["medium"]
+            bottles = request.form["bottles"]
+            cans = request.form["cans"]
             special = Beer(
                 category=category,
                 brand=brand,
@@ -65,7 +66,8 @@ def new_special():
                 volAmt=volAmt,
                 volUnit=volUnit,
                 xpack=xpack,
-                medium=medium,
+                bottles=bottles,
+                cans=cans,
                 price=price,
                 image=image)
 
