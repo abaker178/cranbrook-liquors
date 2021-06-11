@@ -33,7 +33,7 @@ def home():
 # Specials
 @app.route("/specials")
 def specials():
-    beer = db.session.query(Beer.brand,Beer.product).all()
+    beer = db.session.query(Beer).all()
     # month = dt.now().strftime("%B")
     # coll = dt.now().strftime("%b%Y").lower()
     # beer = db[coll].find({"category": "beer"})
