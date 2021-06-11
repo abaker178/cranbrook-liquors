@@ -3,6 +3,8 @@ def create_beer(db):
         __tablename__ = 'beer'
 
         id = db.Column(db.Integer, primary_key=True)
+        timestamp = db.Column(db.DateTime)
+        month = db.Column(db.String(32))
         category = db.Column(db.String(64))
         brand = db.Column(db.String(64))
         product = db.Column(db.String(64))
@@ -11,7 +13,6 @@ def create_beer(db):
         xpack = db.Column(db.Integer)
         container = db.Column(db.String(64))
         price = db.Column(db.Float)
-        month = db.Column(db.String(32))
 
         def __repr__(self):
             return f'<Beer {self.brand} {self.product}>'
@@ -22,6 +23,8 @@ def create_wine(db):
         __tablename__ = 'wine'
 
         id = db.Column(db.Integer, primary_key=True)
+        timestamp = db.Column(db.DateTime)
+        month = db.Column(db.String(32))
         category = db.Column(db.String(64))
         brand = db.Column(db.String(64))
         product = db.Column(db.String(64))
@@ -30,7 +33,6 @@ def create_wine(db):
         container = db.Column(db.String(64))
         varietals = db.Column(db.String(64))
         price = db.Column(db.Float)
-        month = db.Column(db.String(32))
 
         def __repr__(self):
             return f'<Wine {self.brand} {self.product}>'
@@ -41,13 +43,14 @@ def create_spirit(db):
         __tablename__ = 'spirits'
 
         id = db.Column(db.Integer, primary_key=True)
+        timestamp = db.Column(db.DateTime)
+        month = db.Column(db.String(32))
         category = db.Column(db.String(64))
         brand = db.Column(db.String(64))
         product = db.Column(db.String(64))
         volAmt = db.Column(db.Float)
         volUnit = db.Column(db.String(32))
         price = db.Column(db.Float)
-        month = db.Column(db.String(32))
 
         def __repr__(self):
             return f'<Spirit {self.brand} {self.product}>'

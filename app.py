@@ -46,6 +46,7 @@ def new_special():
     # When form is submitted
     if request.method == "POST":
         # Capture universal fields
+        timestamp = dt.now().strftime("%Y-%m-%d %H:%M:%S")
         category = request.form["category"]
         brand = request.form["brand"].title()
         product = request.form["product"].title()
@@ -61,6 +62,7 @@ def new_special():
             xpack = request.form["xpack"]
             container = request.form["container"].title()
             special = Beer(
+                timestamp=timestamp,
                 category=category,
                 brand=brand,
                 product=product,
@@ -77,6 +79,7 @@ def new_special():
             varietals = request.form["varietals"]
             container = request.form["container"].title()
             special = Wine(
+                timestamp=timestamp,
                 category=category,
                 brand=brand,
                 product=product,
@@ -91,6 +94,7 @@ def new_special():
         ## SPIRITS
         else:
             special = Spirit(
+                timestamp=timestamp,
                 category=category,
                 brand=brand,
                 product=product,
