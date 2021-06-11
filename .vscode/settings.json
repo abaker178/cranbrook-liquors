@@ -6,5 +6,6 @@
         "swiper",
         "xpack"
     ],
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "python.pythonPath": "C:\\Users\\user\\anaconda3\\python.exe"
 }

@@ -20,9 +20,14 @@ Spirit = create_spirit(db)
 Staff = create_staff_member(db)
 
 # Capture specials parameters
-beer_params = [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price]
-wine_params = [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price]
-spirit_params = [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
+query_params = {
+    "beer": [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price],
+    "wine": [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price],
+    "spirit": [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
+}
+
+categories = ["beer", "wine", "spirit"]
+now = dt.now()
 
 
 ####################
@@ -38,17 +43,9 @@ def home():
 # Specials
 @app.route("/specials")
 def specials():
-    # Get current time info
-    now = dt.now()
-    query_month = now.strftime("%Y-%m")
     disp_month = now.strftime("%B")
-
-    # Query PostgreSQL for this month's specials
-    beer = db.session.query(*beer_params).filter_by(month=query_month).all()
-    wine = db.session.query(*wine_params).filter_by(month=query_month).all()
-    spirit = db.session.query(*spirit_params).filter_by(month=query_month).all()
-
-    return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
+    results = request
+    return render_template("specials.html")
 
 # Create new specials
 @app.route("/post/special", methods=["GET", "POST"])
@@ -121,11 +118,6 @@ def new_special():
 
     return render_template("new-special.html")
 
-# API route
-@app.route("/api/<type>")
-def api(type):
-    return type
-
 # Staff page
 @app.route("/staff")
 def staff():
@@ -133,6 +125,19 @@ def staff():
     today = dt.today()
     staff = db["staff"].find()
     return render_template("staff.html", staff=staff, today=today)
+
+# API route
+@app.route("/api/<type>")
+def api(type):
+    # Get current time info
+    query_month = now.strftime("%Y-%m")
+
+    # Query PostgreSQL for this month's specials
+    results = db.session.query(*query_params[type]).filter_by(month=query_month).all()
+
+
+
+    return jsonify(results)
 
 ####################
 #### END ROUTES ####

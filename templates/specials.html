@@ -30,11 +30,11 @@
             <div class="item beer col-sm-6 col-md-3 col-lg-3 mt-4">
               <div class="item-wrap fancybox">
                 <div class="work-info">
-                  <h3>{{ item.product }}</h3>
+                  <h3>{{ item.brand }} {{ item.product }}</h3>
                   <div class="item-desc">{{ item.xpack }}-pack {{ item.volume.amount }}{{ item.volume.unit }} {{ item.medium }}</div>
                   <div class="item-price">${{ item.price }}</div>
                 </div>
-                <img class="img-fluid" src="/static/img/specials/{{ item.category }}/{{ item.image }}.jpg">
+                <img class="img-fluid" src="/static/img/specials/beer/stock.jpg">
               </div>
             </div>
           {% endfor %}
@@ -44,11 +44,11 @@
             <div class="item wine col-sm-6 col-md-3 col-lg-3 mt-4">
               <div class="item-wrap fancybox">
                 <div class="work-info">
-                  <h3>{{ item.product }}</h3>
+                  <h3>{{ item.brand }} {{ item.product }}</h3>
                   <div class="item-desc">{{ item.volume.amount }}{{ item.volume.unit }} {{ item.varietals|join(', ') }}</div>
                   <div class="item-price">${{ item.price }}</div>
                 </div>
-                <img class="img-fluid" src="/static/img/specials/{{ item.category }}/{{ item.image }}.jpg">
+                <img class="img-fluid" src="/static/img/specials/wine/stock.jpg">
               </div>
             </div>
           {% endfor %}
@@ -58,11 +58,11 @@
           <div class="item spirit col-sm-6 col-md-3 col-lg-3 mt-4">
             <div class="item-wrap fancybox">
               <div class="work-info">
-                <h3>{{ item.product }}</h3>
+                <h3>{{ item.brand }} {{ item.product }}</h3>
                 <div class="item-desc">{{ item.volume.amount }}{{ item.volume.unit }}</div>
                 <div class="item-price">${{ item.price }}</div>
               </div>
-              <img class="img-fluid" src="/static/img/specials/{{ item.category }}/{{ item.image }}.jpg">
+              <img class="img-fluid" src="/static/img/specials/spirit/stock.jpg">
             </div>
           </div>
           {% endfor %}
