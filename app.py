@@ -19,6 +19,11 @@ Wine = create_wine(db)
 Spirit = create_spirit(db)
 Staff = create_staff_member(db)
 
+# Capture specials parameters
+beer_params = [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price]
+wine_params = [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price]
+spirit_params = [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
+
 
 ####################
 ###### ROUTES ######
@@ -33,17 +38,17 @@ def home():
 # Specials
 @app.route("/specials")
 def specials():
-    month = dt.now().strftime("%Y-%m")
-    beer_params = [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price]
-    wine_params = [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price]
-    spirit_params = [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
-    beer = db.session.query(*beer_params).filter_by(month=month).all()
-    # coll = dt.now().strftime("%b%Y").lower()
-    # beer = db[coll].find({"category": "beer"})
-    # wine = db[coll].find({"category": "wine"})
-    # spirit = db[coll].find({"category": "spirit"})
-    return render_template("test.html", db=beer)
-        #month=month, beer=beer, wine=wine, spirit=spirit)
+    # Get current time info
+    now = dt.now()
+    query_month = now.strftime("%Y-%m")
+    disp_month = now.strftime("%B")
+
+    # Query PostgreSQL for this month's specials
+    beer = db.session.query(*beer_params).filter_by(month=query_month).all()
+    wine = db.session.query(*wine_params).filter_by(month=query_month).all()
+    spirit = db.session.query(*spirit_params).filter_by(month=query_month).all()
+
+    return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
 @app.route("/post/special", methods=["GET", "POST"])
@@ -115,6 +120,11 @@ def new_special():
         return redirect("/post/special", code=302)
 
     return render_template("new-special.html")
+
+# API route
+@app.route("/api/<type>")
+def api(type):
+    return type
 
 # Staff page
 @app.route("/staff")
