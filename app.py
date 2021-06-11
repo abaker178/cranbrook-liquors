@@ -47,8 +47,8 @@ def new_special():
     if request.method == "POST":
         # Capture universal fields
         category = request.form["category"]
-        brand = request.form["brand"]
-        product = request.form["product"]
+        brand = request.form["brand"].title()
+        product = request.form["product"].title()
         volAmt = request.form["vol-amount"]
         volUnit = request.form["vol-unit"]
         price = request.form["price"]
@@ -59,7 +59,7 @@ def new_special():
         ## BEER
         if category == "beer":
             xpack = request.form["xpack"]
-            container = request.form["container"]
+            container = request.form["container"].title()
             special = Beer(
                 category=category,
                 brand=brand,
@@ -75,7 +75,7 @@ def new_special():
         ## WINE
         elif category == "wine":
             varietals = request.form["varietals"]
-            container = request.form["container"]
+            container = request.form["container"].title()
             special = Wine(
                 category=category,
                 brand=brand,
