@@ -28,7 +28,7 @@ Staff = create_staff_member(db)
 # Home
 @app.route("/")
 def home():
-    return "<a href='/post/special'>New Special</a>"
+    return "<a href='/post/special'>New Special</a> <a href='/specials'>Specials</a>"
 
 # Specials
 @app.route("/specials")
@@ -37,7 +37,7 @@ def specials():
     beer_params = [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price]
     wine_params = [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price]
     spirit_params = [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
-    beer = db.session.query(beer_params).filter_by(month=month)
+    beer = db.session.query(*beer_params).filter_by(month=month)
     # coll = dt.now().strftime("%b%Y").lower()
     # beer = db[coll].find({"category": "beer"})
     # wine = db[coll].find({"category": "wine"})
