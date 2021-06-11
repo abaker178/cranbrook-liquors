@@ -1,0 +1,14 @@
+<!-- Extend base layout template -->
+{% extends 'layout.html' %}
+{% block title %}Specials{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block nav_spec %}active{% endblock %}
+
+<!-- ======= Content ======= -->
+{% block content %}
+    <p>
+        {{ db }}
+    </p>
+{% endblock %}

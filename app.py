@@ -32,13 +32,15 @@ def home():
 
 # Specials
 @app.route("/specials")
-def specials():    
-    month = dt.now().strftime("%B")
-    coll = dt.now().strftime("%b%Y").lower()
-    beer = db[coll].find({"category": "beer"})
-    wine = db[coll].find({"category": "wine"})
-    spirit = db[coll].find({"category": "spirit"})
-    return render_template("specials.html", month=month, beer=beer, wine=wine, spirit=spirit)
+def specials():
+    beer = db.session.query(Beer.brand,Beer.product).all()
+    # month = dt.now().strftime("%B")
+    # coll = dt.now().strftime("%b%Y").lower()
+    # beer = db[coll].find({"category": "beer"})
+    # wine = db[coll].find({"category": "wine"})
+    # spirit = db[coll].find({"category": "spirit"})
+    return render_template("test.html", db=beer)
+        #month=month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
 @app.route("/post/special", methods=["GET", "POST"])
@@ -126,4 +128,4 @@ def staff():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
