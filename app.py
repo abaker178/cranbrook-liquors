@@ -51,14 +51,13 @@ def new_special():
         volAmt = request.form["vol-amount"]
         volUnit = request.form["vol-unit"]
         price = request.form["price"]
-        image = "stock" if request.form["image"] == "" else request.form["image"]
+        # image = "stock" if request.form["image"] == "" else request.form["image"]
 
         # Capture unique fields
         ## BEER
         if category == "beer":
             xpack = request.form["xpack"]
-            bottles = request.form["bottles"]
-            cans = request.form["cans"]
+            container = request.form["container"]
             special = Beer(
                 category=category,
                 brand=brand,
@@ -66,14 +65,14 @@ def new_special():
                 volAmt=volAmt,
                 volUnit=volUnit,
                 xpack=xpack,
-                bottles=bottles,
-                cans=cans,
-                price=price,
-                image=image)
+                container=container,
+                price=price)
+                # image=image
 
         ## WINE
         elif category == "wine":
             varietals = request.form["varietals"]
+            container = request.form["container"]
             special = Wine(
                 category=category,
                 brand=brand,
@@ -81,8 +80,9 @@ def new_special():
                 volAmt=volAmt,
                 volUnit=volUnit,
                 varietals=varietals,
-                price=price,
-                image=image)
+                container=container,
+                price=price)
+                # image=image
         
         ## SPIRITS
         else:
@@ -92,13 +92,13 @@ def new_special():
                 product=product,
                 volAmt=volAmt,
                 volUnit=volUnit,
-                price=price,
-                image=image)
+                price=price)
+                # image=image
         
         # Add new special to the DB
         db.session.add(special)
         db.session.commit()
-        return redirect("/post/specials", code=302)
+        return redirect("/post/special", code=302)
 
     return render_template("new-special.html")
 

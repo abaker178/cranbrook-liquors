@@ -9,10 +9,9 @@ var newSpecial = new Vue({
         xpack: "",
         volAmt: "",
         volUnit: "",
-        containers: "",
+        container: "",
         varietals: "",
-        price: "",
-        image: ""
+        price: ""
     },
     computed: {
         imageURL() {
