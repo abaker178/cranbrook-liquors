@@ -17,6 +17,7 @@ db = SQLAlchemy(app)
 Beer = create_beer(db)
 Wine = create_wine(db)
 Spirit = create_spirit(db)
+Staff = create_staff_member(db)
 
 
 ####################
@@ -51,6 +52,7 @@ def new_special():
         volAmt = request.form["vol-amount"]
         volUnit = request.form["vol-unit"]
         price = request.form["price"]
+        month = request.form["month"]
         # image = "stock" if request.form["image"] == "" else request.form["image"]
 
         # Capture unique fields
@@ -66,7 +68,8 @@ def new_special():
                 volUnit=volUnit,
                 xpack=xpack,
                 container=container,
-                price=price)
+                price=price,
+                month=month)
                 # image=image
 
         ## WINE
@@ -81,7 +84,8 @@ def new_special():
                 volUnit=volUnit,
                 varietals=varietals,
                 container=container,
-                price=price)
+                price=price,
+                month=month)
                 # image=image
         
         ## SPIRITS
@@ -92,7 +96,8 @@ def new_special():
                 product=product,
                 volAmt=volAmt,
                 volUnit=volUnit,
-                price=price)
+                price=price,
+                month=month)
                 # image=image
         
         # Add new special to the DB
@@ -117,4 +122,4 @@ def staff():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
