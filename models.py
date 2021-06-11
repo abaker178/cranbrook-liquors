@@ -9,13 +9,12 @@ def create_beer(db):
         volAmt = db.Column(db.Float)
         volUnit = db.Column(db.String(32))
         xpack = db.Column(db.Integer)
-        bottles = db.Column(db.Boolean)
-        cans = db.Column(db.Boolean)
+        container = db.Column(db.String(64))
         price = db.Column(db.Float)
-        image = db.Column(db.String(32))
+        month = db.Column(db.DateTime)
 
         def __repr__(self):
-            return '<Beer %r>' % (self.name)
+            return f'<Beer {self.brand} {self.product}>'
     return Beer
 
 def create_wine(db):
@@ -28,12 +27,13 @@ def create_wine(db):
         product = db.Column(db.String(64))
         volAmt = db.Column(db.Float)
         volUnit = db.Column(db.String(32))
+        container = db.Column(db.String(64))
         varietals = db.Column(db.String(64))
         price = db.Column(db.Float)
-        image = db.Column(db.String(32))
+        month = db.Column(db.DateTime)
 
         def __repr__(self):
-            return '<Wine %r>' % (self.name)
+            return f'<Wine {self.brand} {self.product}>'
     return Wine
 
 def create_spirit(db):
@@ -47,8 +47,8 @@ def create_spirit(db):
         volAmt = db.Column(db.Float)
         volUnit = db.Column(db.String(32))
         price = db.Column(db.Float)
-        image = db.Column(db.String(32))
+        month = db.Column(db.DateTime)
 
         def __repr__(self):
-            return '<Spirit %r>' % (self.name)
+            return f'<Spirit {self.brand} {self.product}>'
     return Spirit
