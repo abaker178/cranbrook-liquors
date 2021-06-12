@@ -141,8 +141,7 @@ def api():
     query_month = now.strftime("%Y-%m")
 
     # Query PostgreSQL for this month's specials
-    results = db.session.query(Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price).filter_by(month=query_month).all()
-
+    results = db.session.query(Beer).all()
     # data = [to_dict(result) for result in results]
 
     # r_brand,r_product,r_vol,r_price = [zip(result[0],result[1],result[6]) for result in results]
