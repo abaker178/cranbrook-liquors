@@ -1,5 +1,6 @@
 # Import Dependencies
 from flask import Flask, render_template, jsonify, request, redirect
+import requests
 from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -10,8 +11,8 @@ from functions import to_dict
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1)
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 # Capture specials creators from models.py
@@ -40,6 +41,12 @@ now = dt.now()
 @app.route("/")
 def home():
     return "<a href='/post/special'>New Special</a> <a href='/specials'>Specials</a>"
+
+# Test
+@app.route("/test")
+def test():
+    dbtest = requests.get("https://cranbrook-liquors.herokuapp.com/api/beer")
+    return render_template("test.html", db=dbtest)
 
 # Specials
 @app.route("/specials")
@@ -135,7 +142,7 @@ def api(type):
 
     # Query PostgreSQL for this month's specials
     results = [item.__dict__ for item in db.session.query(*query_params[type]).filter_by(month=query_month).all()]
-    
+
     # data = [to_dict(result) for result in results]
 
     # r_brand,r_product,r_vol,r_price = [zip(result[0],result[1],result[6]) for result in results]

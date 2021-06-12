@@ -14,3 +14,4 @@ SQLAlchemy==1.4.17
 Werkzeug==2.0.1
 wincertstore==0.2
 psycopg2==2.8.6
+requests==2.25.1
