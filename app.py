@@ -138,7 +138,7 @@ def staff():
 @app.route("/api/beer")
 def api():
     # Get current time info
-    query_month = now.strftime("%Y-%m")
+    # query_month = now.strftime("%Y-%m")
 
     # Query PostgreSQL for this month's specials
     results = db.session.query(Beer).all()
