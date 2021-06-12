@@ -135,13 +135,13 @@ def staff():
     return render_template("staff.html", staff=staff, today=today)
 
 # API route
-@app.route("/api/<type>")
-def api(type):
+@app.route("/api/beer")
+def api():
     # Get current time info
     query_month = now.strftime("%Y-%m")
 
     # Query PostgreSQL for this month's specials
-    results = [item.__dict__ for item in db.session.query(*query_params[type]).filter_by(month=query_month).all()]
+    results = db.session.query(*query_params["beer"]).filter_by(month=query_month).all()
 
     # data = [to_dict(result) for result in results]
 
@@ -155,7 +155,7 @@ def api(type):
     #     r_container = [result[5] for result in results]
     #     r_price = [result[6] for result in results]
 
-    return jsonify(results)
+    return results
 
 ####################
 #### END ROUTES ####
