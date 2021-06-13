@@ -5,7 +5,6 @@ from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
 from models import *
-from functions import to_dict
 
 # Create Flask app
 app = Flask(__name__)
@@ -141,7 +140,7 @@ def api():
     # query_month = now.strftime("%Y-%m")
 
     # Query PostgreSQL for this month's specials
-    results = "Hi"
+    results = db.session.query(Beer).all()
     # data = [to_dict(result) for result in results]
 
     # r_brand,r_product,r_vol,r_price = [zip(result[0],result[1],result[6]) for result in results]
