@@ -10,7 +10,7 @@ from models import *
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB 
-app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1)
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL", "").replace("://", "ql:///", 1)
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
@@ -130,7 +130,7 @@ def new_special():
 def staff():
 
     today = dt.today()
-    staff = db["staff"].find()
+    staff = db.session.query(Staff).all()
     return render_template("staff.html", staff=staff, today=today)
 
 # API route
@@ -140,7 +140,7 @@ def api():
     # query_month = now.strftime("%Y-%m")
 
     # Query PostgreSQL for this month's specials
-    results = db.session.query(Beer.brand).all()
+    results = Beer.query.all()
     return results
 
 ####################
