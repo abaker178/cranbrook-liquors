@@ -56,7 +56,7 @@ def create_spirit(db):
             return f'<Spirit {self.brand} {self.product}>'
     return Spirit
 
-def create_staff_member(db):
+def create_staff(db):
     class Staff(db.Model):
         __tablename__ = 'staff'
 

@@ -1,6 +1,5 @@
 # Import Dependencies
 from flask import Flask, render_template, jsonify, request, redirect
-import requests
 from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -11,24 +10,14 @@ app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1)
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 # Capture specials creators from models.py
 Beer = create_beer(db)
 Wine = create_wine(db)
 Spirit = create_spirit(db)
-Staff = create_staff_member(db)
-
-# Capture specials parameters
-query_params = {
-    "beer": [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price],
-    "wine": [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price],
-    "spirit": [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
-}
-
-categories = ["beer", "wine", "spirit"]
-now = dt.now()
+Staff = create_staff(db)
 
 
 ####################
@@ -41,18 +30,20 @@ now = dt.now()
 def home():
     return "<a href='/post/special'>New Special</a> <a href='/specials'>Specials</a>"
 
-# Test
-@app.route("/test")
-def test():
-    dbtest = requests.get("https://cranbrook-liquors.herokuapp.com/api/beer")
-    return render_template("test.html", db=dbtest)
-
 # Specials
 @app.route("/specials")
 def specials():
-    disp_month = now.strftime("%B")
-    results = request
-    return render_template("specials.html")
+    month = dt.now().strftime("%Y-%m")
+    beer_params = [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price]
+    wine_params = [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price]
+    spirit_params = [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
+    beer = db.session.query(*beer_params).filter_by(month=month).all()
+    # coll = dt.now().strftime("%b%Y").lower()
+    # beer = db[coll].find({"category": "beer"})
+    # wine = db[coll].find({"category": "wine"})
+    # spirit = db[coll].find({"category": "spirit"})
+    return render_template("test.html", db=beer)
+        #month=month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
 @app.route("/post/special", methods=["GET", "POST"])
@@ -130,18 +121,8 @@ def new_special():
 def staff():
 
     today = dt.today()
-    staff = db.session.query(Staff).all()
+    staff = db["staff"].find()
     return render_template("staff.html", staff=staff, today=today)
-
-# API route
-@app.route("/api/beer")
-def api():
-    # Get current time info
-    # query_month = now.strftime("%Y-%m")
-
-    # Query PostgreSQL for this month's specials
-    results = Beer.query.all()
-    return results
 
 ####################
 #### END ROUTES ####
