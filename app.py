@@ -1,5 +1,6 @@
 # Import Dependencies
 from flask import Flask, render_template, jsonify, request, redirect
+import requests
 from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
@@ -8,9 +9,10 @@ from models import *
 # Create Flask app
 app = Flask(__name__)
 
-# Config app for use with Heroku PostgreSQL DB 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('://', 'ql://', 1)
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# Config app for use with Heroku PostgreSQL DB
+db_url = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 # Capture specials creators from models.py
@@ -19,11 +21,14 @@ Wine = create_wine(db)
 Spirit = create_spirit(db)
 Staff = create_staff(db)
 
+# Capture specials parameters
 query_params = {
     "beer": [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price],
     "wine": [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price],
     "spirit": [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
 }
+
+now = dt.now()
 
 
 ####################
@@ -36,13 +41,17 @@ query_params = {
 def home():
     return "<a href='/post/special'>New Special</a> <a href='/specials'>Specials</a>"
 
-# Specials
-@app.route("/specials")
-def specials():
-    month = dt.now().strftime("%Y-%m")
-    beer = Beer.query.filter_by(month=month).all()
-    return render_template("test.html", db=beer)
-        #month=month, beer=beer, wine=wine, spirit=spirit)
+# Test
+@app.route("/test")
+def test():
+    return "The URI is: " + db_url
+
+# # Specials
+# @app.route("/specials")
+# def specials():
+#     disp_month = now.strftime("%B")
+#     results = request
+#     return render_template("specials.html")
 
 # Create new specials
 @app.route("/post/special", methods=["GET", "POST"])
@@ -113,15 +122,23 @@ def new_special():
         db.session.commit()
         return redirect("/post/special", code=302)
 
-    return render_template("new-special.html")
+    return render_template("new-special.html", db=db_url)
 
 # Staff page
 @app.route("/staff")
 def staff():
+    staff = Staff.query.all()
+    return render_template("staff.html", staff=staff)
 
-    today = dt.today()
-    staff = db["staff"].find()
-    return render_template("staff.html", staff=staff, today=today)
+# API route
+# @app.route("/api/beer")
+# def api():
+#     # Get current time info
+#     # query_month = now.strftime("%Y-%m")
+
+#     # Query PostgreSQL for this month's specials
+#     results = Beer.query.all()
+#     return results
 
 ####################
 #### END ROUTES ####
