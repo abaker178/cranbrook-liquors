@@ -9,7 +9,7 @@ from models import *
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', '').replace('://', 'ql://', 1)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -18,6 +18,12 @@ Beer = create_beer(db)
 Wine = create_wine(db)
 Spirit = create_spirit(db)
 Staff = create_staff(db)
+
+query_params = {
+    "beer": [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price],
+    "wine": [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price],
+    "spirit": [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
+}
 
 
 ####################
@@ -34,14 +40,7 @@ def home():
 @app.route("/specials")
 def specials():
     month = dt.now().strftime("%Y-%m")
-    beer_params = [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price]
-    wine_params = [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price]
-    spirit_params = [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
-    beer = db.session.query(*beer_params).filter_by(month=month).all()
-    # coll = dt.now().strftime("%b%Y").lower()
-    # beer = db[coll].find({"category": "beer"})
-    # wine = db[coll].find({"category": "wine"})
-    # spirit = db[coll].find({"category": "spirit"})
+    beer = Beer.query.filter_by(month=month).all()
     return render_template("test.html", db=beer)
         #month=month, beer=beer, wine=wine, spirit=spirit)
 
