@@ -6,7 +6,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import query
 from models import *
-from config import uri
+# from config import uri
 
 # Create Flask app
 app = Flask(__name__)
