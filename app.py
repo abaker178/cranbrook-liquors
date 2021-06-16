@@ -12,7 +12,7 @@ from config import uri
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) #or uri
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
