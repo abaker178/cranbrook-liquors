@@ -4,14 +4,16 @@ import requests
 from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import query
 from models import *
+from config import uri
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_url = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1)
-app.config['SQLALCHEMY_DATABASE_URI'] = db_url
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri
+app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
@@ -41,17 +43,15 @@ now = dt.now()
 def home():
     return "<a href='/post/special'>New Special</a> <a href='/specials'>Specials</a>"
 
-# Test
-@app.route("/test")
-def test():
-    return "The URI is: " + db_url
-
-# # Specials
-# @app.route("/specials")
-# def specials():
-#     disp_month = now.strftime("%B")
-#     results = request
-#     return render_template("specials.html")
+# Specials
+@app.route("/specials")
+def specials():
+    disp_month = now.strftime("%B")
+    api_route = "http://cranbrook-liquors.herokuapp.com/api/"
+    beer = request.get(f"{api_route}beer").json()
+    wine = request.get(f"{api_route}wine").json()
+    spirit = request.get(f"{api_route}spirit").json()
+    return render_template("specials.html", beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
 @app.route("/post/special", methods=["GET", "POST"])
@@ -122,7 +122,7 @@ def new_special():
         db.session.commit()
         return redirect("/post/special", code=302)
 
-    return render_template("new-special.html", db=db_url)
+    return render_template("new-special.html")
 
 # Staff page
 @app.route("/staff")
@@ -131,14 +131,24 @@ def staff():
     return render_template("staff.html", staff=staff)
 
 # API route
-# @app.route("/api/beer")
-# def api():
-#     # Get current time info
-#     # query_month = now.strftime("%Y-%m")
+@app.route("/api/<category>")
+def api(category):
+    # Get current time info
+    query_month = now.strftime("%Y-%m")
 
-#     # Query PostgreSQL for this month's specials
-#     results = Beer.query.all()
-#     return results
+    # Query PostgreSQL for this month's specials
+    results = db.session.query(*query_params[category]).filter_by(month=query_month).all()
+
+    data = [{
+        "brand": result[0],
+        "product": result[1],
+        "volume": f"{result[2]}{result[3]}",
+        "xpack": result[4],
+        "container": result[5],
+        "price": result[6]
+    } for result in results]
+
+    return jsonify(data)
 
 ####################
 #### END ROUTES ####
