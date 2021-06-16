@@ -31,7 +31,7 @@
               <div class="item-wrap fancybox">
                 <div class="work-info">
                   <h3>{{ item.brand }} {{ item.product }}</h3>
-                  <div class="item-desc">{{ item.xpack }}-pack {{ item.volume.amount }}{{ item.volume.unit }} {{ item.medium }}</div>
+                  <div class="item-desc">{{ item.xpack }}-pack {{ item.volume }} {{ item.container }}</div>
                   <div class="item-price">${{ item.price }}</div>
                 </div>
                 <img class="img-fluid" src="/static/img/specials/beer/stock.jpg">
@@ -45,7 +45,7 @@
               <div class="item-wrap fancybox">
                 <div class="work-info">
                   <h3>{{ item.brand }} {{ item.product }}</h3>
-                  <div class="item-desc">{{ item.volume.amount }}{{ item.volume.unit }} {{ item.varietals|join(', ') }}</div>
+                  <div class="item-desc">{{ item.volume }} {{ item.varietals }}</div>
                   <div class="item-price">${{ item.price }}</div>
                 </div>
                 <img class="img-fluid" src="/static/img/specials/wine/stock.jpg">
@@ -59,7 +59,7 @@
             <div class="item-wrap fancybox">
               <div class="work-info">
                 <h3>{{ item.brand }} {{ item.product }}</h3>
-                <div class="item-desc">{{ item.volume.amount }}{{ item.volume.unit }}</div>
+                <div class="item-desc">{{ item.volume }}</div>
                 <div class="item-price">${{ item.price }}</div>
               </div>
               <img class="img-fluid" src="/static/img/specials/spirit/stock.jpg">

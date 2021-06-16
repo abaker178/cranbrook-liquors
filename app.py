@@ -6,13 +6,13 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import query
 from models import *
-# from config import uri
+from config import uri
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) #or uri
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -25,8 +25,8 @@ Staff = create_staff(db)
 
 # Capture specials parameters
 query_params = {
-    "beer": [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.xpack, Beer.container, Beer.price],
-    "wine": [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.varietals, Wine.container, Wine.price],
+    "beer": [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.price, Beer.xpack, Beer.container],
+    "wine": [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.price, Wine.varietals, Wine.container],
     "spirit": [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
 }
 
@@ -48,9 +48,9 @@ def home():
 def specials():
     disp_month = now.strftime("%B")
     api_route = "http://cranbrook-liquors.herokuapp.com/api/"
-    beer = request.get(f"{api_route}beer").json()
-    wine = request.get(f"{api_route}wine").json()
-    spirit = request.get(f"{api_route}spirit").json()
+    beer = requests.get(f"{api_route}beer").json()
+    wine = requests.get(f"{api_route}wine").json()
+    spirit = requests.get(f"{api_route}spirit").json()
     return render_template("specials.html", beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
@@ -143,10 +143,16 @@ def api(category):
         "brand": result[0],
         "product": result[1],
         "volume": f"{result[2]}{result[3]}",
-        "xpack": result[4],
-        "container": result[5],
-        "price": result[6]
+        "price": result[4],
     } for result in results]
+
+    if category == "beer":
+        data["xpack"] = [result[5] for result in results]
+        data["container"] = [result[6] for result in results]
+
+    elif category == "wine":
+        data["varietals"] = [result[5] for result in results]
+        data["container"] = [result[6] for result in results]
 
     return jsonify(data)
 
