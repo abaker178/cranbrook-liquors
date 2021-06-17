@@ -6,13 +6,13 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import query
 from models import *
-from config import uri
+# from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) # or uri # (for testing)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -51,7 +51,7 @@ def specials():
     beer = requests.get(f"{api_route}beer").json()
     wine = requests.get(f"{api_route}wine").json()
     spirit = requests.get(f"{api_route}spirit").json()
-    return render_template("specials.html", beer=beer, wine=wine, spirit=spirit)
+    return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
 @app.route("/post/special", methods=["GET", "POST"])
@@ -163,4 +163,4 @@ def api(category):
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
