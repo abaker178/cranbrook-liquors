@@ -393,7 +393,7 @@ ul li {
   border-radius: 5;
 }
 
-main {
+#hero-img {
   background-image: url("../img/wine-bg.jpg");
 }
 

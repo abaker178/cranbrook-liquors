@@ -38,20 +38,14 @@ now = dt.now()
 ####################
 
 
-# Home
-@app.route("/")
-def home():
-    return "<a href='/post/special'>New Special</a> <a href='/specials'>Specials</a>"
-
 # Specials
-@app.route("/specials")
+@app.route("/")
 def specials():
     disp_month = now.strftime("%B")
-    prod_api_route = "http://cranbrook-liquors.herokuapp.com/api/"
-    test_api_route = "http://127.0.0.1:5000/api/"
-    beer = requests.get(f"{prod_api_route}beer").json()
-    wine = requests.get(f"{prod_api_route}wine").json()
-    spirit = requests.get(f"{prod_api_route}spirit").json()
+    api_route = "http://cranbrook-liquors.herokuapp.com/api/"
+    beer = requests.get(f"{api_route}beer").json()
+    wine = requests.get(f"{api_route}wine").json()
+    spirit = requests.get(f"{api_route}spirit").json()
     return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
