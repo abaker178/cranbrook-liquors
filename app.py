@@ -6,13 +6,13 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import query
 from models import *
-# from config import uri # (for testing)
+from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) # or uri # (for testing)
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri # (for testing)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -42,14 +42,14 @@ now = dt.now()
 @app.route("/")
 def specials():
     disp_month = now.strftime("%B")
-    api_route = "http://cranbrook-liquors.herokuapp.com/api/"
+    api_route = "http://cranbrook-liquors.herokuapp.com/api/category/"
     beer = requests.get(f"{api_route}beer").json()
     wine = requests.get(f"{api_route}wine").json()
     spirit = requests.get(f"{api_route}spirit").json()
     return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
-@app.route("/post/special", methods=["GET", "POST"])
+@app.route("/create-special", methods=["GET", "POST"])
 def new_special():
     # When form is submitted
     if request.method == "POST":
@@ -115,7 +115,7 @@ def new_special():
         # Add new special to the DB
         db.session.add(special)
         db.session.commit()
-        return redirect("/post/special", code=302)
+        return redirect("/create-special", code=302)
 
     return render_template("new-special.html")
 
@@ -125,11 +125,22 @@ def staff():
     staff = Staff.query.all()
     return render_template("staff.html", staff=staff)
 
+# Preview
+@app.route("/preview/<date>")
+def preview(date):
+    month = date
+    api_route = "http://cranbrook-liquors.herokuapp.com/api/category/"
+    beer = requests.get(f"{api_route}beer/{month}").json()
+    wine = requests.get(f"{api_route}wine/{month}").json()
+    spirit = requests.get(f"{api_route}spirit/{month}").json()
+    return render_template("preview.html", month=month, beer=beer, wine=wine, spirit=spirit)
+
 # API route
-@app.route("/api/<category>")
-def api(category):
+@app.route("/api/<category>/<date>")
+def api(category, date):
     # Get current time info
-    query_month = now.strftime("%Y-%m")
+    query_month = (date, now.strftime("%Y-%m"))[date == ""]
+
 
     # Query PostgreSQL for this month's specials
     results = db.session.query(*query_params[category]).filter_by(month=query_month).all()
@@ -171,4 +182,4 @@ def api(category):
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
