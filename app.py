@@ -16,6 +16,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
+api_route = "http://cranbrook-liquors.herokuapp.com/api"
+# api_route = "http://127.0.0.1:5000/api" # (for testing)
+
 # Capture specials creators from models.py
 Beer = create_beer(db)
 Wine = create_wine(db)
@@ -31,7 +34,6 @@ query_params = {
 
 now = dt.now()
 
-
 ####################
 ###### ROUTES ######
 ####################
@@ -41,8 +43,6 @@ now = dt.now()
 @app.route("/")
 def specials():
     disp_month = now.strftime("%B")
-    api_route = "http://cranbrook-liquors.herokuapp.com/api"
-    # api_route = "http://127.0.0.1:5000/api"
     beer = requests.get(f"{api_route}?category=beer").json()
     wine = requests.get(f"{api_route}?category=wine").json()
     spirit = requests.get(f"{api_route}?category=beer").json()
@@ -128,10 +128,9 @@ def staff():
 # Preview
 @app.route("/preview")
 def preview():
-    month = request.args("month")
-    query_month = (month, now.strftime("%Y-%m"))[month == ""]
+    month = request.args.get("month")
+    query_month = (month, now.strftime("%Y-%m"))[month == None]
     
-    api_route = "http://cranbrook-liquors.herokuapp.com/api"
     beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
     wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
     spirit = requests.get(f"{api_route}?category=beer&month={query_month}").json()
