@@ -6,13 +6,13 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import query
 from models import *
-from config import uri # (for testing)
+# from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri # (for testing)
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) # or uri # (for testing)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
@@ -182,4 +182,4 @@ def api(category, date):
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
