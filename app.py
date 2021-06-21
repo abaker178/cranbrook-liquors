@@ -4,9 +4,8 @@ import requests
 from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.orm import query
 from models import *
-# from config import uri # (for testing)
+#from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
@@ -43,9 +42,10 @@ now = dt.now()
 def specials():
     disp_month = now.strftime("%B")
     api_route = "http://cranbrook-liquors.herokuapp.com/api/"
-    beer = requests.get(f"{api_route}beer").json()
-    wine = requests.get(f"{api_route}wine").json()
-    spirit = requests.get(f"{api_route}spirit").json()
+    api_route = "http://127.0.0.1:5000/api/"
+    beer = requests.get(f"{api_route}?category=beer").json()
+    wine = requests.get(f"{api_route}?category=wine").json()
+    spirit = requests.get(f"{api_route}?category=beer").json()
     return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 # Create new specials
@@ -141,11 +141,10 @@ def preview():
 @app.route("/api")
 def api():
     # Get current time info
-    month = request.args("month")
-    category = request.args("category")
+    month = request.args.get("month")
+    category = request.args.get("category")
 
-    query_month = (month, now.strftime("%Y-%m"))[month == ""]
-
+    query_month = (month, now.strftime("%Y-%m"))[month == None]
 
     # Query PostgreSQL for this month's specials
     results = db.session.query(*query_params[category]).filter_by(month=query_month).all()
