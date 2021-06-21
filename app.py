@@ -42,7 +42,7 @@ now = dt.now()
 @app.route("/")
 def specials():
     disp_month = now.strftime("%B")
-    api_route = "http://cranbrook-liquors.herokuapp.com/api/category/"
+    api_route = "http://cranbrook-liquors.herokuapp.com/api/"
     beer = requests.get(f"{api_route}beer").json()
     wine = requests.get(f"{api_route}wine").json()
     spirit = requests.get(f"{api_route}spirit").json()
@@ -129,7 +129,7 @@ def staff():
 @app.route("/preview/<date>")
 def preview(date):
     month = date
-    api_route = "http://cranbrook-liquors.herokuapp.com/api/category/"
+    api_route = "http://cranbrook-liquors.herokuapp.com/api/"
     beer = requests.get(f"{api_route}beer/{month}").json()
     wine = requests.get(f"{api_route}wine/{month}").json()
     spirit = requests.get(f"{api_route}spirit/{month}").json()
