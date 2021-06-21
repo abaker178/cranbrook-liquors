@@ -126,20 +126,25 @@ def staff():
     return render_template("staff.html", staff=staff)
 
 # Preview
-@app.route("/preview/<date>")
-def preview(date):
-    month = date
-    api_route = "http://cranbrook-liquors.herokuapp.com/api/"
-    beer = requests.get(f"{api_route}beer/{month}").json()
-    wine = requests.get(f"{api_route}wine/{month}").json()
-    spirit = requests.get(f"{api_route}spirit/{month}").json()
-    return render_template("preview.html", month=month, beer=beer, wine=wine, spirit=spirit)
+@app.route("/preview")
+def preview():
+    month = request.args("month")
+    query_month = (month, now.strftime("%Y-%m"))[month == ""]
+    
+    api_route = "http://cranbrook-liquors.herokuapp.com/api"
+    beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
+    wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
+    spirit = requests.get(f"{api_route}?category=beer&month={query_month}").json()
+    return render_template("specials.html", month=query_month, beer=beer, wine=wine, spirit=spirit)
 
 # API route
-@app.route("/api/<category>/<date>")
-def api(category, date):
+@app.route("/api")
+def api():
     # Get current time info
-    query_month = (date, now.strftime("%Y-%m"))[date == ""]
+    month = request.args("month")
+    category = request.args("category")
+
+    query_month = (month, now.strftime("%Y-%m"))[month == ""]
 
 
     # Query PostgreSQL for this month's specials
