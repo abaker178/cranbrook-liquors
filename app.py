@@ -42,7 +42,7 @@ now = dt.now()
 def specials():
     disp_month = now.strftime("%B")
     api_route = "http://cranbrook-liquors.herokuapp.com/api/"
-    api_route = "http://127.0.0.1:5000/api/"
+    # api_route = "http://127.0.0.1:5000/api/"
     beer = requests.get(f"{api_route}?category=beer").json()
     wine = requests.get(f"{api_route}?category=wine").json()
     spirit = requests.get(f"{api_route}?category=beer").json()
