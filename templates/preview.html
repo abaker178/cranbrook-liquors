@@ -1,0 +1,72 @@
+<!-- Extend base layout template -->
+{% extends 'layout.html' %}
+{% block title %}Specials{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block nav_spec %}active{% endblock %}
+
+<!-- ======= Content ======= -->
+{% block content %}
+  <main id="main">
+    <section>
+      <div class="container">
+        <div id="specials" class="whitebg row align-items-center">
+          <div class="col-md-12 col-lg-6 mb-lg-0">
+            <h2><label for="month">See Specials for the month of: </label>
+              <input type="month" id="month" name="month" onchange="updateSpecials(this.value)">
+            </h2>
+          </div>
+        </div>
+        <div id="portfolio-grid" class="row no-gutter" data-aos="fade-up" data-aos-delay="100">
+          <!-- BEER -->
+          {% for item in beer %}
+            <div class="item beer col-sm-6 col-md-3 col-lg-3 mt-4">
+              <div class="item-wrap fancybox">
+                <div class="work-info">
+                  <h3>{{ item.brand }} {{ item.product }}</h3>
+                  <div class="item-desc">{{ item.xpack }}-pack {{ item.volume }} {{ item.container }}</div>
+                  <div class="item-price">${{ item.price }}</div>
+                </div>
+                <img class="img-fluid" src="/static/img/specials/beer/stock.jpg">
+              </div>
+            </div>
+          {% endfor %}
+
+          <!-- WINE -->
+          {% for item in wine %}
+            <div class="item wine col-sm-6 col-md-3 col-lg-3 mt-4">
+              <div class="item-wrap fancybox">
+                <div class="work-info">
+                  <h3>{{ item.brand }} {{ item.product }}</h3>
+                  <div class="item-desc">{{ item.volume }} {{ item.varietals }}</div>
+                  <div class="item-price">${{ item.price }}</div>
+                </div>
+                <img class="img-fluid" src="/static/img/specials/wine/stock.jpg">
+              </div>
+            </div>
+          {% endfor %}
+          
+          <!-- SPIRIT -->
+          {% for item in spirit %}
+          <div class="item spirit col-sm-6 col-md-3 col-lg-3 mt-4">
+            <div class="item-wrap fancybox">
+              <div class="work-info">
+                <h3>{{ item.brand }} {{ item.product }}</h3>
+                <div class="item-desc">{{ item.volume }}</div>
+                <div class="item-price">${{ item.price }}</div>
+              </div>
+              <img class="img-fluid" src="/static/img/specials/spirit/stock.jpg">
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+  </main>
+{% endblock %}
+
+{% block add_scripts %}
+  <script src="{{ url_for('static',filename='js/preview.js') }}"></script>
+{% endblock %}
