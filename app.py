@@ -5,34 +5,35 @@ from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
 from models import *
-# from config import uri # (for testing)
+from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) # or uri # (for testing)
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri # (for testing)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-api_route = "http://cranbrook-liquors.herokuapp.com/api"
-# api_route = "http://127.0.0.1:5000/api" # (for testing)
+# api_route = "http://cranbrook-liquors.herokuapp.com/api"
+api_route = "http://127.0.0.1:5000/api" # (for testing)
 
-# Capture specials creators from models.py
-Beer = create_beer(db)
-Wine = create_wine(db)
-Spirit = create_spirit(db)
+# Capture creators from models.py
+Special = create_special(db)
 Staff = create_staff(db)
 
 # Capture specials parameters
 query_params = {
-    "beer": [Beer.brand, Beer.product, Beer.volAmt, Beer.volUnit, Beer.price, Beer.xpack, Beer.container],
-    "wine": [Wine.brand, Wine.product, Wine.volAmt, Wine.volUnit, Wine.price, Wine.varietals, Wine.container],
-    "spirit": [Spirit.brand, Spirit.product, Spirit.volAmt, Spirit.volUnit, Spirit.price]
+    "beer": [Special.id, Special.brand, Special.product, Special.volAmt, Special.volUnit, Special.price, Special.xpack, Special.container],
+    "wine": [Special.id, Special.brand, Special.product, Special.volAmt, Special.volUnit, Special.price, Special.varietals, Special.container],
+    "spirit": [Special.id, Special.brand, Special.product, Special.volAmt, Special.volUnit, Special.price]
 }
 
 now = dt.now()
+
+def format_num(n):
+    return n
 
 ####################
 ###### ROUTES ######
@@ -69,7 +70,7 @@ def new_special():
         if category == "beer":
             xpack = request.form["xpack"]
             container = request.form["container"].title()
-            special = Beer(
+            special = Special(
                 timestamp=timestamp,
                 category=category,
                 brand=brand,
@@ -86,7 +87,7 @@ def new_special():
         elif category == "wine":
             varietals = request.form["varietals"]
             container = request.form["container"].title()
-            special = Wine(
+            special = Special(
                 timestamp=timestamp,
                 category=category,
                 brand=brand,
@@ -101,7 +102,7 @@ def new_special():
         
         ## SPIRITS
         else:
-            special = Spirit(
+            special = Special(
                 timestamp=timestamp,
                 category=category,
                 brand=brand,
@@ -119,10 +120,19 @@ def new_special():
 
     return render_template("new-special.html")
 
+# Edit Special
+@app.route("/edit-special")
+def edit_special():
+    id = request.args.get("id")
+    for category in query_params.keys():
+        item = db.session.query(*query_params[category]).filter_by(id=id).all()
+    return render_template("edit-special.html", item=item)
+
+
 # Staff page
 @app.route("/staff")
 def staff():
-    staff = Staff.query.all()
+    staff = db.session.query(Staff).all()
     return render_template("staff.html", staff=staff)
 
 # Preview
@@ -149,34 +159,37 @@ def api():
     query_month = (month, now.strftime("%Y-%m"))[month == None]
 
     # Query PostgreSQL for this month's specials
-    results = db.session.query(*query_params[category]).filter_by(month=query_month).all()
+    results = db.session.query(*query_params[category]).filter_by(month=query_month, category=category).all()
 
     if category == "beer":
         data = [{
-            "brand": result[0],
-            "product": result[1],
-            "volume": f"{result[2]}{result[3]}",
-            "price": result[4],
-            "xpack": result[5],
-            "container": result[6]
+            "id": result[0],
+            "brand": result[1],
+            "product": result[2],
+            "volume": f"{format_num(result[3])}{result[4]}",
+            "price": result[5],
+            "xpack": result[6],
+            "container": result[7]
         } for result in results]
 
     elif category == "wine":
         data = [{
-            "brand": result[0],
-            "product": result[1],
-            "volume": f"{result[2]}{result[3]}",
-            "price": result[4],
-            "varietals": result[5],
-            "container": result[6]
+            "id": result[0],
+            "brand": result[1],
+            "product": result[2],
+            "volume": f"{format_num(result[3])}{result[4]}",
+            "price": result[5],
+            "varietals": result[6],
+            "container": result[7]
         } for result in results]
 
     else:
         data = [{
-            "brand": result[0],
-            "product": result[1],
-            "volume": f"{result[2]}{result[3]}",
-            "price": result[4],
+            "id": result[0],
+            "brand": result[1],
+            "product": result[2],
+            "volume": f"{format_num(result[3])}{result[4]}",
+            "price": result[5],
         } for result in results]
 
     return jsonify(data)
@@ -188,4 +201,4 @@ def api():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)

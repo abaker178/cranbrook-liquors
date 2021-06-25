@@ -1,6 +1,6 @@
-def create_beer(db):
-    class Beer(db.Model):
-        __tablename__ = 'beer'
+def create_special(db):
+    class Special(db.Model):
+        __tablename__ = 'special'
 
         id = db.Column(db.Integer, primary_key=True)
         timestamp = db.Column(db.DateTime)
@@ -10,51 +10,14 @@ def create_beer(db):
         product = db.Column(db.String(64))
         volAmt = db.Column(db.Float)
         volUnit = db.Column(db.String(32))
+        price = db.Column(db.Float)
         xpack = db.Column(db.Integer)
         container = db.Column(db.String(64))
-        price = db.Column(db.Float)
-
-        def __repr__(self):
-            return f'<Beer {self.brand} {self.product}>'
-    return Beer
-
-def create_wine(db):
-    class Wine(db.Model):
-        __tablename__ = 'wine'
-
-        id = db.Column(db.Integer, primary_key=True)
-        timestamp = db.Column(db.DateTime)
-        month = db.Column(db.String(32))
-        category = db.Column(db.String(64))
-        brand = db.Column(db.String(64))
-        product = db.Column(db.String(64))
-        volAmt = db.Column(db.Float)
-        volUnit = db.Column(db.String(32))
-        container = db.Column(db.String(64))
         varietals = db.Column(db.String(64))
-        price = db.Column(db.Float)
 
         def __repr__(self):
-            return f'<Wine {self.brand} {self.product}>'
-    return Wine
-
-def create_spirit(db):
-    class Spirit(db.Model):
-        __tablename__ = 'spirits'
-
-        id = db.Column(db.Integer, primary_key=True)
-        timestamp = db.Column(db.DateTime)
-        month = db.Column(db.String(32))
-        category = db.Column(db.String(64))
-        brand = db.Column(db.String(64))
-        product = db.Column(db.String(64))
-        volAmt = db.Column(db.Float)
-        volUnit = db.Column(db.String(32))
-        price = db.Column(db.Float)
-
-        def __repr__(self):
-            return f'<Spirit {self.brand} {self.product}>'
-    return Spirit
+            return f'<Special {self.brand} {self.product}>'
+    return Special
 
 def create_staff(db):
     class Staff(db.Model):

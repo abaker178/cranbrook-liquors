@@ -22,7 +22,7 @@
           <!-- BEER -->
           {% for item in beer %}
             <div class="item beer col-sm-6 col-md-3 col-lg-3 mt-4">
-              <div class="item-wrap fancybox">
+              <div id="{{ item.id }}" class="item-wrap fancybox" onclick="editSpecial(this.id)">
                 <div class="work-info">
                   <h3>{{ item.brand }} {{ item.product }}</h3>
                   <div class="item-desc">{{ item.xpack }}-pack {{ item.volume }} {{ item.container }}</div>
@@ -36,7 +36,7 @@
           <!-- WINE -->
           {% for item in wine %}
             <div class="item wine col-sm-6 col-md-3 col-lg-3 mt-4">
-              <div class="item-wrap fancybox">
+              <div id="{{ item.id }}" class="item-wrap fancybox" onclick="editSpecial(this.id)">
                 <div class="work-info">
                   <h3>{{ item.brand }} {{ item.product }}</h3>
                   <div class="item-desc">{{ item.volume }} {{ item.varietals }}</div>
@@ -50,7 +50,7 @@
           <!-- SPIRIT -->
           {% for item in spirit %}
           <div class="item spirit col-sm-6 col-md-3 col-lg-3 mt-4">
-            <div class="item-wrap fancybox">
+            <div id="{{ item.id }}" class="item-wrap fancybox" onclick="editSpecial(this.id)">
               <div class="work-info">
                 <h3>{{ item.brand }} {{ item.product }}</h3>
                 <div class="item-desc">{{ item.volume }}</div>
