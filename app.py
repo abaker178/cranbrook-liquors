@@ -185,7 +185,7 @@ def delete_special():
     return redirect(f"/preview?month={current_month}")
 
 # Contact Page
-@app.route("/contact")
+@app.route("/contact", methods=["GET", "POST"])
 def contact():
     return render_template("contact.html")
 
