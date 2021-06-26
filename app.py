@@ -5,19 +5,19 @@ from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
 from models import *
-from config import uri # (for testing)
+# from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) or uri # (for testing)
+db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) # or uri # (for testing)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
-# api_route = "http://cranbrook-liquors.herokuapp.com/api"
-api_route = "http://127.0.0.1:5000/api" # (for testing)
+api_route = "http://cranbrook-liquors.herokuapp.com/api"
+# api_route = "http://127.0.0.1:5000/api" # (for testing)
 
 # Capture creators from models.py
 Special = create_special(db)
@@ -202,4 +202,4 @@ def api():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
