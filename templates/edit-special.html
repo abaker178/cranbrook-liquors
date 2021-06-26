@@ -10,17 +10,20 @@
 {% block content %}
 
 <div class="container">
-  <h1>Edit Special: </h1>
+  <h1>Edit Special: {{ item.brand }} {{ item.product }}</h1>
+  <!-- Hidden item fields for use in scripts below -->
+  <span id="item-category" value="{{ category }}" class="hidden"></span>
+  <span id="item-info" value="{{ item }}" class="hidden"></span>
   <div id="new-special" class="row">
     <!-- New Special Input -->
     <div class="col-12 col-md-8 container-fluid">
 
-      <form method="POST" action="/create-special" role="form" name="special-form" id="special-form" @submit="checkForm" novalidate>
+      <form method="POST" action="/edit-special" role="form" name="special-form" id="special-form" @submit="checkForm" novalidate>
         
         <!-- Category -->
         <div class="mb-3 beer wine spirits">
           <label for="category" class="form-label required">Category</label>
-          <select class="form-select" id="category" name="category" v-model= "category">
+          <select class="form-select" id="category" name="category" v-model="category">
             <option value="beer">Beer</option>
             <option value="wine">Wine</option>
             <option value="spirit">Spirit</option>
@@ -37,7 +40,7 @@
         <!-- Product -->
         <div class="mb-3 beer wine spirits">
           <label for="product" class="form-label">Product <small class="text-muted">(e.g. "Vodka" or "60 Min.")</small></label>
-          <input type="text" class="form-control" id="product" name="product" v-model="product" required>
+          <input type="text" class="form-control" id="product" name="product" v-model="product">
           <div class="invalid-feedback">Please provide the Product</div>
         </div>
 
@@ -92,7 +95,7 @@
         </div>
 
         <!-- Image -->
-        <div class="mb-3 beer wine spirits">
+        <div class="mb-3 beer wine spirits hidden">
           <label for="image-upload" class="form-label">Product Image <small class="text-muted">(stock imagery will be used if not provided)</small></label>
           <input class="form-control" type="file" id="image-upload" name="image" @change="readURL">
         </div>
@@ -100,7 +103,7 @@
         <!-- Month -->
         <div class="mb-3 beer wine spirits">
           <label for="month" class="form-label required">Month <small class="text-muted">(provide both Month and Year)</small></label>
-          <input class="form-control" type="month" id="month" name="month" required>
+          <input class="form-control" type="month" id="month" name="month" v-model="month" required>
           <div class="invalid-feedback">Please select the Month and Year for which this special is valid</div>
         </div>
 
@@ -134,5 +137,24 @@
 
 <!-- Additional Scripts -->
 {% block add_scripts %}
-<script src="{{ url_for('static',filename='js/new-special.js') }}"></script>
+  <script src="{{ url_for('static',filename='js/new-special.js') }}"></script>
+  <script type="text/javascript">
+    // Get hidden item info from HTML/Jinja
+    const _category = document.getElementById("item-category").attributes.value.value;
+    const _itemInfo = JSON.parse(document.getElementById("item-info").attributes.value.value.replaceAll("'",'"'));
+
+    // Update the newSpecial Vue instance with the item's info so the fields and image update accordingly
+    special = newSpecial._data;
+    special.category = _category;
+    special.brand = _itemInfo.brand;
+    special.product = _itemInfo.product;
+    special.volAmt = _itemInfo.volume;
+    special.volUnit = _itemInfo.unit;
+    special.month = _itemInfo.month;
+    special.price = _itemInfo.price;
+    special.xpack = _itemInfo.xpack;
+    special.container = _itemInfo.container;
+    special.varietals = _itemInfo.varietals;
+
+  </script>
 {% endblock %}

@@ -6,12 +6,13 @@ var newSpecial = new Vue({
         category: "beer",
         brand: "",
         product: "",
-        xpack: "",
         volAmt: "",
         volUnit: "",
+        price: "",
+        month: "",
+        xpack: "",
         container: "",
-        varietals: "",
-        price: ""
+        varietals: ""
     },
     computed: {
         imageURL() {

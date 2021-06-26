@@ -37,7 +37,7 @@
         <!-- Product -->
         <div class="mb-3 beer wine spirits">
           <label for="product" class="form-label">Product <small class="text-muted">(e.g. "Vodka" or "60 Min.")</small></label>
-          <input type="text" class="form-control" id="product" name="product" v-model="product" required>
+          <input type="text" class="form-control" id="product" name="product" v-model="product">
           <div class="invalid-feedback">Please provide the Product</div>
         </div>
 
@@ -92,7 +92,7 @@
         </div>
 
         <!-- Image -->
-        <div class="mb-3 beer wine spirits">
+        <div class="mb-3 beer wine spirits hidden">
           <label for="image-upload" class="form-label">Product Image <small class="text-muted">(stock imagery will be used if not provided)</small></label>
           <input class="form-control" type="file" id="image-upload" name="image" @change="readURL">
         </div>
@@ -100,7 +100,7 @@
         <!-- Month -->
         <div class="mb-3 beer wine spirits">
           <label for="month" class="form-label required">Month <small class="text-muted">(provide both Month and Year)</small></label>
-          <input class="form-control" type="month" id="month" name="month" required>
+          <input class="form-control" type="month" id="month" name="month" v-model="month" required>
           <div class="invalid-feedback">Please select the Month and Year for which this special is valid</div>
         </div>
 
