@@ -18,7 +18,7 @@
     <!-- New Special Input -->
     <div class="col-12 col-md-8 container-fluid">
 
-      <form method="POST" action="/edit-special" role="form" name="special-form" id="special-form" @submit="checkForm" novalidate>
+      <form method="POST" action="/edit-special?id={{ item.id }}" role="form" name="special-form" id="special-form" @submit="checkForm" novalidate>
         
         <!-- Category -->
         <div class="mb-3 beer wine spirits">

@@ -22,13 +22,16 @@
           <!-- BEER -->
           {% for item in beer %}
             <div class="item beer col-sm-6 col-md-3 col-lg-3 mt-4">
-              <div id ="{{ item.id }}" class="item-wrap fancybox" onclick="editSpecial(this.id)">
+              <div class="item-wrap fancybox">
                 <div class="work-info">
                   <h3>{{ item.brand }} {{ item.product }}</h3>
                   <div class="item-desc">{{ item.xpack }}-pack {{ item.volume }}{{ item.unit }} {{ item.container }}</div>
                   <div class="item-price">${{ item.price }}</div>
                 </div>
                 <img class="img-fluid" src="/static/img/specials/beer/stock.jpg">
+                <div class="float">
+                  <a href="../edit-special?id={{ item.id }}"><span class="bi bi-pencil"></span></a>
+                </div>
               </div>
             </div>
           {% endfor %}
@@ -36,7 +39,7 @@
           <!-- WINE -->
           {% for item in wine %}
             <div class="item wine col-sm-6 col-md-3 col-lg-3 mt-4">
-              <div id ="{{ item.id }}" class="item-wrap fancybox" onclick="editSpecial(this.id)">
+              <div class="item-wrap fancybox">
                 <div class="work-info">
                   <h3>{{ item.brand }} {{ item.product }}</h3>
                   <div class="item-desc">{{ item.volume }}{{ item.unit }} {{ item.container }}</div>
@@ -44,6 +47,9 @@
                   <div class="item-price">${{ item.price }}</div>
                 </div>
                 <img class="img-fluid" src="/static/img/specials/wine/stock.jpg">
+                <div class="social">
+                  <a href="../edit-special?id={{ item.id }}"><span class="bi bi-pencil"></span></a>
+                </div>
               </div>
             </div>
           {% endfor %}
@@ -51,13 +57,16 @@
           <!-- SPIRIT -->
           {% for item in spirit %}
           <div class="item spirit col-sm-6 col-md-3 col-lg-3 mt-4">
-            <div id ="{{ item.id }}" class="item-wrap fancybox" onclick="editSpecial(this.id)">
+            <div class="item-wrap fancybox">
               <div class="work-info">
                 <h3>{{ item.brand }} {{ item.product }}</h3>
                 <div class="item-desc">{{ item.volume }}{{ item.unit }}</div>
                 <div class="item-price">${{ item.price }}</div>
               </div>
               <img class="img-fluid" src="/static/img/specials/spirit/stock.jpg">
+              <div class="social">
+                <a href="../edit-special?id={{ item.id }}"><span class="bi bi-pencil"></span></a>
+              </div>
             </div>
           </div>
           {% endfor %}

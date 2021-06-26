@@ -131,8 +131,19 @@ def edit_special():
     # When form is submitted
     if request.method == "POST":
         updated = generate_special()
-        print(updated.volUnit)
-        db.session.query(Special).filter_by(id=id).update({Special.volUnit: updated.volUnit}, synchronize_session=False)
+        db.session.query(Special).filter_by(id=id)\
+            .update({
+                Special.category: updated.category,
+                Special.brand: updated.brand,
+                Special.product: updated.product,
+                Special.volAmt: updated.volAmt,
+                Special.volUnit: updated.volUnit,
+                Special.price: updated.price,
+                Special.month: updated.month,
+                Special.xpack: updated.xpack,
+                Special.container: updated.container,
+                Special.varietals: updated.varietals,
+                }, synchronize_session= False)
         db.session.commit()
         return redirect(f"/preview?month={request.form['month']}")
     
