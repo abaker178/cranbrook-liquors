@@ -153,6 +153,14 @@ def edit_special():
 
     return render_template("edit-special.html", item=item_dict, category=item_category)
 
+# Delete Special
+@app.route("/delete-special")
+def delete_special():
+    id = request.args.get("id")
+    current_month = request.args.get("month")
+    db.session.query(Special).filter_by(id=id).delete(synchronize_session=False)
+    db.session.commit()
+    return redirect(f"/preview?month={current_month}")
 
 # Staff page
 @app.route("/staff")
@@ -172,7 +180,7 @@ def preview():
         beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
         wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
         spirit = requests.get(f"{api_route}?category=spirit&month={query_month}").json()
-        return render_template("preview.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
+        return render_template("preview.html", return_month=query_month, month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 # API route
 @app.route("/api")
