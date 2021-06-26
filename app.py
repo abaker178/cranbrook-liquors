@@ -87,9 +87,10 @@ def generate_special():
         price = request.form["price"],
         month = request.form["month"],
         xpack = request.form["xpack"] if category == "beer" else 0, # for beer
-        container = ("", request.form["container"].title())[category != "spirit"], # for beer and wine
-        varietals = ("", request.form["varietals"])[category == "wine"]) # for wine
+        container = request.form["container"].title() if category != "spirit" else "", # for beer and wine
+        varietals = request.form["varietals"] if category == "wine" else "" # for wine
         # image = "stock" if request.form["image"] == "" else request.form["image"]
+    )
     return special
 
 ####################
@@ -131,7 +132,7 @@ def edit_special():
     if request.method == "POST":
         updated = generate_special()
         print(updated.volUnit)
-        db.session.query(Special).filter_by(id=id).update({"volUnit": updated.volUnit})
+        db.session.query(Special).filter_by(id=id).update({Special.volUnit: updated.volUnit}, synchronize_session=False)
         db.session.commit()
         return redirect(f"/preview?month={request.form['month']}")
     
