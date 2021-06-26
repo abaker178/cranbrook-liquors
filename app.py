@@ -32,6 +32,10 @@ query_params = {
 
 now = dt.now()
 
+#######################
+###### FUNCTIONS ######
+#######################
+
 def format_num(n):
     return (n, int(n))[n%1==0]
 
@@ -93,12 +97,16 @@ def generate_special():
     )
     return special
 
+#######################
+#### END FUNCTIONS ####
+#######################
+
+
 ####################
 ###### ROUTES ######
 ####################
 
-
-# Specials
+# Home Page (Specials)
 @app.route("/")
 def specials():
     disp_month = now.strftime("%B")
@@ -107,7 +115,21 @@ def specials():
     spirit = requests.get(f"{api_route}?category=spirit").json()
     return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
-# Create new specials
+# Preview Specials
+@app.route("/preview")
+def preview():
+    query_month = request.args.get("month")
+    this_month = now.strftime("%Y-%m")
+    if query_month == None:
+        return redirect(f"/preview?month={this_month}")
+    else:
+        disp_month = dt.strptime(query_month, "%Y-%m").strftime("%B")
+        beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
+        wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
+        spirit = requests.get(f"{api_route}?category=spirit&month={query_month}").json()
+        return render_template("preview.html", return_month=query_month, month=disp_month, beer=beer, wine=wine, spirit=spirit)
+
+# Create new special
 @app.route("/create-special", methods=["GET", "POST"])
 def new_special():
     # When form is submitted
@@ -162,25 +184,16 @@ def delete_special():
     db.session.commit()
     return redirect(f"/preview?month={current_month}")
 
-# Staff page
-@app.route("/staff")
-def staff():
-    staff = db.session.query(Staff).all()
-    return render_template("staff.html", staff=staff)
+# Contact Page
+@app.route("/contact")
+def contact():
+    return render_template("contact.html")
 
-# Preview
-@app.route("/preview")
-def preview():
-    query_month = request.args.get("month")
-    this_month = now.strftime("%Y-%m")
-    if query_month == None:
-        return redirect(f"/preview?month={this_month}")
-    else:
-        disp_month = dt.strptime(query_month, "%Y-%m").strftime("%B")
-        beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
-        wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
-        spirit = requests.get(f"{api_route}?category=spirit&month={query_month}").json()
-        return render_template("preview.html", return_month=query_month, month=disp_month, beer=beer, wine=wine, spirit=spirit)
+# Staff page
+# @app.route("/staff")
+# def staff():
+#     staff = db.session.query(Staff).all()
+#     return render_template("staff.html", staff=staff)
 
 # API route
 @app.route("/api")
