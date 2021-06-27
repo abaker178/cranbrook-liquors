@@ -1,10 +1,10 @@
 <!-- Extend base layout template -->
-{% extends 'layout.html' %}
-{% block title %}Specials{% endblock %}
+{% extends 'layout-user.html' %}
+{% block title %}Preview{% endblock %}
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block nav_spec %}active{% endblock %}
+{% block nav_preview %}active{% endblock %}
 
 <!-- ======= Content ======= -->
 {% block content %}
@@ -13,7 +13,8 @@
       <div class="container">
         <div id="specials" class="whitebg row align-items-center">
           <div class="col-md-12 col-lg-6 mb-lg-0">
-            <h2><label for="month">See Specials for the month of: </label>
+            <h2><label for="month">See Specials for: </label>
+              <span id="month-in" class="hidden" value="{{ return_month }}"></span>
               <input type="month" id="month" name="month" onchange="updateSpecials(this.value)">
             </h2>
           </div>

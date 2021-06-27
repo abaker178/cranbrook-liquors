@@ -1,0 +1,38 @@
+<!-- Extend base layout template -->
+{% extends 'layout-user.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block nav_dash %}active{% endblock %}
+
+{% block content %}
+    <div class="container mb-5">
+        <div class="row">
+            <div class="col-4">
+                <div class="card mt-5">
+                    <a href="create-special">
+                        <div class="fs-1 text-center card-img-top bi bi-plus-square-fill my-5"></div>
+                        <p class="w-100 btn btn-primary lead mb-0">Create Special</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card mt-5">
+                    <a href="preview">
+                        <div class="fs-1 text-center card-img-top bi bi-eye-fill my-5"></div>
+                        <p class="w-100 btn btn-primary lead mb-0">Preview Specials</p>
+                    </a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card mt-5">
+                    <a href="chronicle">
+                        <div class="fs-1 text-center card-img-top bi bi-newspaper my-5"></div>
+                        <p class="w-100 btn btn-primary lead mb-0">Country Chronicle</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

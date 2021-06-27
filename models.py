@@ -1,6 +1,6 @@
 def create_special(db):
     class Special(db.Model):
-        __tablename__ = 'special'
+        __tablename__ = "special"
 
         id = db.Column(db.Integer, primary_key=True)
         timestamp = db.Column(db.DateTime)
@@ -16,12 +16,12 @@ def create_special(db):
         varietals = db.Column(db.String(64))
 
         def __repr__(self):
-            return f'<Special {self.brand} {self.product}>'
+            return f"<Special {self.brand} {self.product}>"
     return Special
 
 def create_staff(db):
     class Staff(db.Model):
-        __tablename__ = 'staff'
+        __tablename__ = "staff"
 
         id = db.Column(db.Integer, primary_key=True)
         name = db.Column(db.String(32))
@@ -31,5 +31,5 @@ def create_staff(db):
         goals = db.Column(db.String(64))
 
         def __repr__(self):
-            return f'<Staff {self.name}>'
+            return f"<Staff {self.name}>"
     return Staff

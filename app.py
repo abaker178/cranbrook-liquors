@@ -5,16 +5,27 @@ from datetime import datetime as dt
 import os
 from flask_sqlalchemy import SQLAlchemy
 from models import *
+from flask_mail import Mail, Message
 # from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB
-db_uri = os.environ.get('DATABASE_URL', '').replace("://", "ql://", 1) # or uri # (for testing)
-app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) # or uri # (for testing)
+app.config.update(dict(
+    SQLALCHEMY_DATABASE_URI = db_uri,
+    SQLALCHEMY_TRACK_MODIFICATIONS = False,
+    MAIL_SERVER = 'smtp.googlemail.com',
+    MAIL_PORT = 465,
+    MAIL_USE_TLS = False,
+    MAIL_USE_SSL = True,
+    MAIL_USERNAME = '',
+    MAIL_PASSWORD = ''
+))
+
 db = SQLAlchemy(app)
+mail = Mail(app)
 
 api_route = "http://cranbrook-liquors.herokuapp.com/api"
 # api_route = "http://127.0.0.1:5000/api" # (for testing)
@@ -115,21 +126,37 @@ def specials():
     spirit = requests.get(f"{api_route}?category=spirit").json()
     return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
-# Preview Specials
-@app.route("/preview")
-def preview():
-    query_month = request.args.get("month")
-    this_month = now.strftime("%Y-%m")
-    if query_month == None:
-        return redirect(f"/preview?month={this_month}")
-    else:
-        disp_month = dt.strptime(query_month, "%Y-%m").strftime("%B")
-        beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
-        wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
-        spirit = requests.get(f"{api_route}?category=spirit&month={query_month}").json()
-        return render_template("preview.html", return_month=query_month, month=disp_month, beer=beer, wine=wine, spirit=spirit)
+# Contact Page
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+        message = Message(request.args.get("subject"), sender=request.args.get("email"), recipients=['askus@cranbrookliquors.com'])
+        message.body = request.args.get("body")
+        mail.send(message)
+        return redirect("thank-you.html", code=302)
 
-# Create new special
+    return render_template("contact.html")
+
+# Thank You Page
+@app.route("/thank-you")
+def thanks():
+    render_template("thank-you.html")
+
+# Staff page
+# @app.route("/staff")
+# def staff():
+#     staff = db.session.query(Staff).all()
+#     return render_template("staff.html", staff=staff)
+
+
+#### USER ROUTES ####
+
+# Dashboard
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
+
+# Create New Special
 @app.route("/create-special", methods=["GET", "POST"])
 def new_special():
     # When form is submitted
@@ -144,6 +171,20 @@ def new_special():
         return redirect("/create-special", code=302)
 
     return render_template("new-special.html")
+
+# Preview Specials
+@app.route("/preview")
+def preview():
+    query_month = request.args.get("month")
+    this_month = now.strftime("%Y-%m")
+    if query_month == None:
+        return redirect(f"/preview?month={this_month}")
+    else:
+        disp_month = dt.strptime(query_month, "%Y-%m").strftime("%B")
+        beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
+        wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
+        spirit = requests.get(f"{api_route}?category=spirit&month={query_month}").json()
+        return render_template("preview.html", return_month=query_month, month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 # Edit Special
 @app.route("/edit-special", methods=["GET", "POST"])
@@ -184,16 +225,13 @@ def delete_special():
     db.session.commit()
     return redirect(f"/preview?month={current_month}")
 
-# Contact Page
-@app.route("/contact", methods=["GET", "POST"])
-def contact():
-    return render_template("contact.html")
+# Chronicle Ad Editor
+@app.route("/chronicle")
+def chonicle():
+    return render_template("chronicle.html")
 
-# Staff page
-# @app.route("/staff")
-# def staff():
-#     staff = db.session.query(Staff).all()
-#     return render_template("staff.html", staff=staff)
+
+#### API ROUTES ####
 
 # API route
 @app.route("/api")

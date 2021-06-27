@@ -1,0 +1,20 @@
+<!-- Extend base layout template -->
+{% extends 'layout.html' %}
+{% block title %}Specials{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block nav_cont %}active{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Thank you for your inquiry! We will respond during our <a href="hours.html">business hours</a>. You will be redirected to the home page in 5 seconds.</h2>
+</div>
+{% endblock %}
+{% block add_scripts %}
+  <script>
+    setTimeout(function() {
+      window.location = "../";
+    }, 5000);
+  </script>
+{% endblock %}

@@ -4,7 +4,7 @@
 {% block head %}
   {{ super() }}
 {% endblock %}
-{% block nav_spec %}active{% endblock %}
+{% block nav_cont %}active{% endblock %}
 
 {% block content %}
   <main id="main">
@@ -21,7 +21,7 @@
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0" data-aos="fade-up">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="/contact" method="POST" role="form" class="php-email-form">
 
               <div class="row gy-3">
                 <div class="col-md-6 form-group">
