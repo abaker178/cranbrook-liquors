@@ -19,6 +19,19 @@ def create_special(db):
             return f"<Special {self.brand} {self.product}>"
     return Special
 
+def create_user(db):
+    class User(db.Model):
+        __tablename__ = "user"
+
+        id = db.Column(db.Integer, primary_key=True)
+        email = db.Column(db.String(64), unique=True)
+        password = db.Column(db.String(64))
+        name = db.Column(db.String(32))
+
+        def __repr__(self):
+            return f"<User {self.name}>"
+    return User
+
 def create_staff(db):
     class Staff(db.Model):
         __tablename__ = "staff"

@@ -1,19 +1,21 @@
 # Import Dependencies
 from flask import Flask, render_template, jsonify, request, redirect
+from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
+from flask_login import login_manager, login_required, current_user, LoginManager
 import requests
 from datetime import datetime as dt
 import os
-from flask_sqlalchemy import SQLAlchemy
 from models import *
-from flask_mail import Mail, Message
 # from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
-# Config app for use with Heroku PostgreSQL DB
+# Config app for use with Heroku PostgreSQL DB, sending emails, and login
 db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) # or uri # (for testing)
 app.config.update(dict(
+    SECRET_KEY = "super!secret@password#",
     SQLALCHEMY_DATABASE_URI = db_uri,
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
     MAIL_SERVER = 'smtp.googlemail.com',
@@ -24,6 +26,16 @@ app.config.update(dict(
     MAIL_PASSWORD = ''
 ))
 
+login_manager = LoginManager()
+login_manager.login_view = "login"
+login_manager.init_app(app)
+
+# from .auth import auth as auth_blueprint
+# app.register_blueprint(auth_blueprint)
+
+# from .main import main as main_blueprint
+# app.register_blueprint(main_blueprint)
+
 db = SQLAlchemy(app)
 mail = Mail(app)
 
@@ -33,6 +45,7 @@ api_route = "http://cranbrook-liquors.herokuapp.com/api"
 # Capture creators from models.py
 Special = create_special(db)
 Staff = create_staff(db)
+User = create_user(db)
 
 # Capture specials parameters
 query_params = {
@@ -151,13 +164,24 @@ def thanks():
 
 #### USER ROUTES ####
 
+@login_manager.user_loader
+def load_user(user_id):
+    # since the user_id is just the primary key of our user table, use it in the query for the user
+    return User.query.get(int(user_id))
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
 # Dashboard
 @app.route("/dashboard")
+@login_required
 def dashboard():
     return render_template("dashboard.html")
 
 # Create New Special
 @app.route("/create-special", methods=["GET", "POST"])
+@login_required
 def new_special():
     # When form is submitted
     if request.method == "POST":
@@ -174,6 +198,7 @@ def new_special():
 
 # Preview Specials
 @app.route("/preview")
+@login_required
 def preview():
     query_month = request.args.get("month")
     this_month = now.strftime("%Y-%m")
@@ -188,6 +213,7 @@ def preview():
 
 # Edit Special
 @app.route("/edit-special", methods=["GET", "POST"])
+@login_required
 def edit_special():
     id = request.args.get("id")
 
@@ -218,6 +244,7 @@ def edit_special():
 
 # Delete Special
 @app.route("/delete-special")
+@login_required
 def delete_special():
     id = request.args.get("id")
     current_month = request.args.get("month")
@@ -227,7 +254,8 @@ def delete_special():
 
 # Chronicle Ad Editor
 @app.route("/chronicle")
-def chonicle():
+@login_required
+def chronicle():
     return render_template("chronicle.html")
 
 
@@ -253,4 +281,4 @@ def api():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
