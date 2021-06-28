@@ -1,3 +1,5 @@
+from flask_login import UserMixin
+
 def create_special(db):
     class Special(db.Model):
         __tablename__ = "special"
@@ -20,7 +22,7 @@ def create_special(db):
     return Special
 
 def create_user(db):
-    class User(db.Model):
+    class User(UserMixin, db.Model):
         __tablename__ = "user"
 
         id = db.Column(db.Integer, primary_key=True)
