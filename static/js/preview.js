@@ -8,3 +8,11 @@ monthEle.value = monthInput
 function updateSpecials(month) {
     window.location = `../preview?month=${month}`;
 };
+
+function confirmDelete(id, month, name) {
+    if(window.confirm(`Are you sure you would like to delete special: ${name}`)) {
+        window.location = `/delete-special?id=${id}&month=${month}`;
+    } else {
+        return false;
+    }
+};

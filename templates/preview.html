@@ -34,7 +34,7 @@
                 </div>
                 <div style="position:absolute;right:0;top:0;" class="mt-3 me-2">
                   <a href="/edit-special?id={{ item.id }}"><span class="bi bi-pencil-fill p-2 bg-light rounded-circle"></span></a>
-                  <a href="/delete-special?id={{ item.id }}&month={{ return_month }}"><span class="bi bi-trash-fill p-2 bg-light rounded-circle"></span></a>
+                  <a id="{{ item.id }}" data-month="{{ return_month }}" data-name="{{ item.brand }} {{ item.product }}" href="#" onclick="return confirmDelete(this.id, this.dataset.month, this.dataset.name)"><span class="bi bi-trash-fill p-2 bg-light rounded-circle"></span></a>
                 </div>
               </div>
             </div>
@@ -55,7 +55,7 @@
                 </div>
                 <div style="position:absolute;right:0;top:0;" class="mt-3 me-2">
                   <a href="/edit-special?id={{ item.id }}"><span class="bi bi-pencil-fill p-2 bg-light rounded-circle"></span></a>
-                  <a href="/delete-special?id={{ item.id }}&month={{ return_month }}"><span class="bi bi-trash-fill p-2 bg-light rounded-circle"></span></a>
+                  <a id="{{ item.id }}" data-month="{{ return_month }}" data-name="{{ item.brand }} {{ item.product }}" href="#" onclick="return confirmDelete(this.id, this.dataset.month, this.dataset.name)"><span class="bi bi-trash-fill p-2 bg-light rounded-circle"></span></a>
                 </div>
               </div>
             </div>
@@ -75,7 +75,7 @@
               </div>
               <div style="position:absolute;right:0;top:0;" class="mt-3 me-2">
                 <a href="/edit-special?id={{ item.id }}"><span class="bi bi-pencil-fill p-2 bg-light rounded-circle"></span></a>
-                <a href="/delete-special?id={{ item.id }}&month={{ return_month }}"><span class="bi bi-trash-fill p-2 bg-light rounded-circle"></span></a>
+                <a id="{{ item.id }}" data-month="{{ return_month }}" data-name="{{ item.brand }} {{ item.product }}" href="#" onclick="return confirmDelete(this.id, this.dataset.month, this.dataset.name)"><span class="bi bi-trash-fill p-2 bg-light rounded-circle"></span></a>
               </div>
             </div>
           </div>
