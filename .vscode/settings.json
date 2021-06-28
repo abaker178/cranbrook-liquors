@@ -5,6 +5,7 @@
         "disp",
         "readmore",
         "swiper",
+        "werkzeug",
         "xpack"
     ],
     "liveServer.settings.port": 5501,
