@@ -11,13 +11,13 @@ import requests
 from datetime import datetime as dt
 import os
 from models import *
-# from config import uri # (for testing)
+from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB, sending emails, and login
-db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) # or uri # (for testing)
+db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) or uri # (for testing)
 app.config.update(dict(
     SECRET_KEY = "super!secret@password#",
     SQLALCHEMY_DATABASE_URI = db_uri,
@@ -182,6 +182,8 @@ def login():
 
         user = db.session.query(User).filter_by(email=email).first()
 
+        print(generate_password_hash(user.password))
+
         # check if the user actually exists
         # take the user-supplied password, hash it, and compare it to the hashed password in the database
         if not user or not check_password_hash(user.password, password):
@@ -190,8 +192,7 @@ def login():
 
         # if the above check passes, then we know the user has the right credentials
         login_user(user, remember=remember)
-        # if the above check passes, then we know the user has the right credentials
-        return redirect("dashboard")
+        return redirect("/dashboard")
     
     return render_template("login.html")
 
