@@ -173,24 +173,27 @@ def load_user(user_id):
     # since the user_id is just the primary key of our user table, use it in the query for the user
     return db.session.query(User).get(int(user_id))
 
-@app.route("/login", methods=["POST"])
+@app.route("/login", methods=["GET","POST"])
 def login():
-    email = request.form.get("email")
-    password = request.form.get("password")
-    remember = request.form.get("remember")
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        remember = request.form.get("remember")
 
-    user = db.session.query(User).filter_by(email=email).first()
+        user = db.session.query(User).filter_by(email=email).first()
 
-    # check if the user actually exists
-    # take the user-supplied password, hash it, and compare it to the hashed password in the database
-    if not user or not check_password_hash(user.password, password):
-        flash("Please check your login details and try again.")
-        return redirect("login") # if the user doesn't exist or password is wrong, reload the page
+        # check if the user actually exists
+        # take the user-supplied password, hash it, and compare it to the hashed password in the database
+        if not user or not check_password_hash(user.password, password):
+            flash("Please check your login details and try again.")
+            return redirect("login") # if the user doesn't exist or password is wrong, reload the page
 
-    # if the above check passes, then we know the user has the right credentials
-    login_user(user, remember=remember)
-    # if the above check passes, then we know the user has the right credentials
-    return redirect("dashboard")
+        # if the above check passes, then we know the user has the right credentials
+        login_user(user, remember=remember)
+        # if the above check passes, then we know the user has the right credentials
+        return redirect("dashboard")
+    
+    return render_template("login.html")
 
 # Dashboard
 @app.route("/dashboard")
