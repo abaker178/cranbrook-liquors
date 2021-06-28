@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_mail import Mail, Message
 
 # All login code was repurposed from https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login
-from flask_login import login_manager, login_required, LoginManager, login_user
+from flask_login import login_manager, login_required, LoginManager, login_user, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 import requests
@@ -19,7 +19,7 @@ app = Flask(__name__)
 # Config app for use with Heroku PostgreSQL DB, sending emails, and login
 db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) or uri # (for testing)
 app.config.update(dict(
-    SECRET_KEY = "super!secret@password#",
+    SECRET_KEY = "su9er!s3cre7@p4ssw0r6#Un6373ct4b1e$",
     SQLALCHEMY_DATABASE_URI = db_uri,
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
     MAIL_SERVER = 'smtp.googlemail.com',
@@ -164,14 +164,6 @@ def thanks():
 #     staff = db.session.query(Staff).all()
 #     return render_template("staff.html", staff=staff)
 
-
-#### USER ROUTES ####
-
-@login_manager.user_loader
-def load_user(user_id):
-    # since the user_id is just the primary key of our user table, use it in the query for the user
-    return db.session.query(User).get(int(user_id))
-
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "POST":
@@ -194,6 +186,20 @@ def login():
         return redirect("/dashboard")
     
     return render_template("login.html")
+
+
+#### USER ROUTES ####
+
+@login_manager.user_loader
+def load_user(user_id):
+    # since the user_id is just the primary key of our user table, use it in the query for the user
+    return db.session.query(User).get(int(user_id))
+
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect("/login")
 
 # Dashboard
 @app.route("/dashboard")
@@ -303,4 +309,4 @@ def api():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
