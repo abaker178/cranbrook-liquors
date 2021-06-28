@@ -11,13 +11,13 @@ import requests
 from datetime import datetime as dt
 import os
 from models import *
-from config import uri # (for testing)
+# from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB, sending emails, and login
-db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) or uri # (for testing)
+db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) # or uri # (for testing)
 app.config.update(dict(
     SECRET_KEY = "super!secret@password#",
     SQLALCHEMY_DATABASE_URI = db_uri,
@@ -304,4 +304,4 @@ def api():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
