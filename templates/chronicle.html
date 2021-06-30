@@ -8,6 +8,29 @@
 
 {% block content %}
 <div class="container">
-  <h2>Future Home of the Country Chronicle Editor</h2>
+  <h2>Country Chronicle Editor</h2>
+  <div id="specials" class="whitebg row align-items-center">
+    <div class="col-md-12 col-lg-6 mb-lg-0">
+      <h2><label for="month">Select Month: </label>
+        <span id="month-in" class="hidden" value="{{ return_month }}"></span>
+        <input type="month" id="month" name="month" onchange="updateSpecials(this.value)">
+      </h2>
+    </div>
+  </div>
+  <div id="ad-editor">
+    <svg id="click" xmlns="http://www.w3.org/2000/svg" width="600" height="300">
+      <defs>
+          <g id="pointer" transform="scale(0.8)">
+              <path d="M0-1c-14.5-25.6-14.5-25.7-14.5-33.8c0-8.1,6.5-14.6,14.5-14.6s14.5,6.6,14.5,14.6C14.5-26.7,14.5-26.6,0-1z"></path>
+              <path d="M0-49c7.7,0,14,6.3,14,14.1c0,8,0,8.1-14,32.8c-14-24.7-14-24.9-14-32.8C-14-42.7-7.7-49,0-49 M0-50c-8.3,0-15,6.8-15,15.1 S-15-26.5,0,0c15-26.5,15-26.5,15-34.9S8.3-50,0-50L0-50z"></path>
+          </g>
+      </defs>
+    </svg>
+  </div>
 </div>
+{% endblock %}
+
+{% block add_scripts %}
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="{{ url_for('static',filename='js/chronicle.js') }}"></script>
 {% endblock %}

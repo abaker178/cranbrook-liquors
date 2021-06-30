@@ -11,13 +11,13 @@ import requests
 from datetime import datetime as dt
 import os
 from models import *
-# from config import uri # (for testing)
+from config import uri # (for testing)
 
 # Create Flask app
 app = Flask(__name__)
 
 # Config app for use with Heroku PostgreSQL DB, sending emails, and login
-db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) # or uri # (for testing)
+db_uri = os.environ.get("DATABASE_URL", "").replace("://", "ql://", 1) or uri # (for testing)
 app.config.update(dict(
     SECRET_KEY = "su9er!s3cre7@p4ssw0r6#Un6373ct4b1e$",
     SQLALCHEMY_DATABASE_URI = db_uri,
@@ -278,7 +278,16 @@ def delete_special():
 @app.route("/chronicle")
 @login_required
 def chronicle():
-    return render_template("chronicle.html")
+    query_month = request.args.get("month")
+    this_month = now.strftime("%Y-%m")
+    if query_month == None:
+        return redirect(f"/chronicle?month={this_month}")
+    else:
+        disp_month = dt.strptime(query_month, "%Y-%m").strftime("%B")
+        beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
+        wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
+        spirit = requests.get(f"{api_route}?category=spirit&month={query_month}").json()
+        return render_template("chronicle.html", return_month=query_month, month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 
 #### API ROUTES ####
@@ -303,4 +312,4 @@ def api():
 
 # Run app if running from main
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True)
