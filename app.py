@@ -279,7 +279,16 @@ def delete_special():
 @app.route("/chronicle")
 @login_required
 def chronicle():
-    return render_template("chronicle.html")
+    query_month = request.args.get("month")
+    this_month = now.strftime("%Y-%m")
+    if query_month == None:
+        return redirect(f"/chronicle?month={this_month}")
+    else:
+        disp_month = dt.strptime(query_month, "%Y-%m").strftime("%B")
+        beer = requests.get(f"{api_route}?category=beer&month={query_month}").json()
+        wine = requests.get(f"{api_route}?category=wine&month={query_month}").json()
+        spirit = requests.get(f"{api_route}?category=spirit&month={query_month}").json()
+        return render_template("chronicle.html", return_month=query_month, month=disp_month, beer=beer, wine=wine, spirit=spirit)
 
 
 #### API ROUTES ####
