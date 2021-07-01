@@ -400,3 +400,11 @@ ul li {
   content:"*";
   color:red;
 }
+
+.chron-cell.chron-cell-small {
+  height: 1in;
+}
+
+.chron-cell.chron-cell-normal {
+  height: 1.75in;
+}

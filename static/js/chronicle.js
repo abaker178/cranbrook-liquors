@@ -52,3 +52,7 @@ async function getSpecials(month) {
     const myJson = await beer.json();
     // do something with myJson
   }
+
+function screenshot() {
+    html2canvas(document.getElementById("ad-editor")).then(canvas => document.body.appendChild(canvas));
+}

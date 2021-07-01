@@ -18,10 +18,24 @@
     </div>
   </div>
   <div class="container">
-    <div id="ad-editor">
-      <div class="row">
-        {% for n in 20 %}
-          <div class="col-2" height="100"></div>
+    <div id="ad-editor" class="mx-auto" style="width: 8.5in; height: 11in;">
+      <div class="row g-3">
+        <div class="col-8"></div> <!-- Spacer -->
+        <div class="col-4">
+          <div class="p-2 border border-dark chron-cell chron-cell-small bg-light"></div>
+        </div>
+        {% for n in range(16) %}
+          <div class="col-2">
+            <div class="p-2 border border-dark chron-cell chron-cell-normal"></div>
+          </div>
+        {% endfor %}
+        <div class="col-4">
+          <div class="p-2 border border-dark chron-cell chron-cell-normal"></div>
+        </div>
+        {% for n in range(2) %}
+          <div class="col-6">
+            <div class="p-2 border border-dark chron-cell chron-cell-normal bg-light"></div>
+          </div>
         {% endfor %}
       </div>
 
@@ -32,9 +46,11 @@
       {% endfor %}
     </div>
   </div>
+  <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'><br/>
 </div>
 {% endblock %}
 
 {% block add_scripts %}
+<script src="{{ url_for('static',filename='vendor/html2canvas/html2canvas.min.js') }}"></script>
 <script src="{{ url_for('static',filename='js/chronicle.js') }}"></script>
 {% endblock %}
