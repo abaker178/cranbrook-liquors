@@ -17,7 +17,20 @@
       </h4>
     </div>
   </div>
-  <div id="ad-editor">
+  <div class="container">
+    <div id="ad-editor">
+      <div class="row">
+        {% for n in 20 %}
+          <div class="col-2" height="100"></div>
+        {% endfor %}
+      </div>
+
+      {% for item in specials %}
+        <div id="item.id" class="card col-2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+
+        <img id="drag1" src="{{ url_for('static',filename='img/specials/beer/stock.jpg') }}" draggable="true" ondragstart="drag(event)" width="336" height="69">
+      {% endfor %}
+    </div>
   </div>
 </div>
 {% endblock %}
