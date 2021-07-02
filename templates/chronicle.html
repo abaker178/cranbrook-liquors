@@ -38,12 +38,11 @@
           </div>
         {% endfor %}
       </div>
-
-      {% for item in specials %}
+      <!-- {% for item in specials %}
         <div id="item.id" class="card col-2" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
         <img id="drag1" src="{{ url_for('static',filename='img/specials/beer/stock.jpg') }}" draggable="true" ondragstart="drag(event)" width="336" height="69">
-      {% endfor %}
+      {% endfor %} -->
     </div>
   </div>
   <input type='button' id='but_screenshot' value='Take screenshot' onclick='screenshot();'><br/>
