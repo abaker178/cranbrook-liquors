@@ -387,13 +387,33 @@ ul li {
   margin-top: 10px;
 }
 
+.hours {
+  font-size: small;
+  top: 7em;
+}
+
+#hours-navbar {
+  position: absolute;
+  right: 7%;
+  max-width: 50%;
+}
+
+#hours-sidebar {
+  position: fixed;
+  right: 1em;
+}
+
+td {
+  padding: .25em 1em;
+}
+
+td:first-child,th {
+  text-align: right;
+}
+
 .whitebg {
   background-color: white;
   border-radius: 5;
-}
-
-#hero-img {
-  background-image: url("../img/wine-bg.jpg");
 }
 
 .form-label.required:before {

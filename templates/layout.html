@@ -84,6 +84,29 @@
             <li class="nav-item py-0 py-lg-3">
               <a class="nav-link {% block nav_log %}{% endblock %}" href="login">Login</a>
             </li>
+            <div id="hours-navbar" class="d-inline d-lg-none col-lg-2 hours border border-success">
+              <table>
+                <tbody>
+                  <th>Hours</th>
+                  <tr>
+                    <td>Monday-Thursday</td>
+                    <td>9:30am-8pm</td>
+                  </tr>
+                  <tr>
+                    <td>Friday</td>
+                    <td>9:30am-9pm</td>
+                  </tr>
+                  <tr>
+                    <td>Saturday</td>
+                    <td>9am-9pm</td>
+                  </tr>
+                  <tr>
+                    <td>Sunday</td>
+                    <td>Closed</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           {% endif %}
 
           {% if current_user.is_authenticated %}
@@ -96,9 +119,37 @@
     </div>
   </nav>
 
-  <!-- ======= Content ======= -->
-  <div id="content">{% block content %}{% endblock %}</div>
+  <div class="row">
+    <div class="d-none d-lg-inline col-lg-2"></div>
+    <!-- ======= Content ======= -->
+    <div class="col-12 col-lg-8" id="content">{% block content %}{% endblock %}</div>
+
+    <!-- ======= Hours Bar ======= -->
+    <div id="hours-sidebar" class="d-none d-lg-inline col-lg-2 hours border border-success">
+      <table>
+        <tbody>
+          <th>Hours</th>
+          <tr>
+            <td>Monday-Thursday</td>
+            <td>9:30am-8pm</td>
+          </tr>
+          <tr>
+            <td>Friday</td>
+            <td>9:30am-9pm</td>
+          </tr>
+          <tr>
+            <td>Saturday</td>
+            <td>9am-9pm</td>
+          </tr>
+          <tr>
+            <td>Sunday</td>
+            <td>Closed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   
+  </div>
   <!-- ======= Footer ======= -->
   <footer class="footer" role="contentinfo">
     <div class="container">

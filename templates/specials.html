@@ -13,7 +13,7 @@
     <section>
       <div class="container" data-aos="fade-up">
         <div id="specials" class="whitebg row align-items-center">
-          <img class="image-fluid col-12" id="hero-img" src="/static/img/wine-bg.jpg"></img>
+          <img class="image col-12 p-0" id="hero-img" src="/static/img/wine-bg.jpg" style="background-repeat: no-repeat;"></img>
           <div class="col-md-12 col-lg-6 mb-lg-0">
             <h2>{{ month }} Specials</h2>
           </div>
@@ -29,10 +29,10 @@
         <div id="portfolio-grid" class="row no-gutter">
           <!-- BEER -->
           {% for item in beer %}
-            <div class="item beer col-sm-6 col-md-3 col-lg-3 mt-4">
+            <div class="item beer col-6 col-md-4 col-xl-3 mt-4">
               <div class="item-wrap fancybox rounded">
                 <div class="work-info">
-                  <h3>{{ item.brand }} {{ item.product }}</h3>
+                  <h4>{{ item.brand }} {{ item.product }}</h4>
                   <div class="item-desc">{{ item.xpack }}-pack {{ item.volume }}{{ item.unit }} {{ item.container }}</div>
                   <div class="item-price">${{ item.price }}</div>
                 </div>
@@ -43,10 +43,10 @@
 
           <!-- WINE -->
           {% for item in wine %}
-            <div class="item wine col-sm-6 col-md-3 col-lg-3 mt-4">
+            <div class="item wine col-6 col-md-4 col-xl-3 mt-4">
               <div class="item-wrap fancybox rounded">
                 <div class="work-info">
-                  <h3>{{ item.brand }} {{ item.product }}</h3>
+                  <h4>{{ item.brand }} {{ item.product }}</h4>
                   <div class="item-desc">{{ item.volume }}{{ item.unit }} {{ item.container }}</div>
                   <div class="item-desc">{{ item.varietals }}</div>
                   <div class="item-price">${{ item.price }}</div>
@@ -58,10 +58,10 @@
           
           <!-- SPIRIT -->
           {% for item in spirit %}
-          <div class="item spirit col-sm-6 col-md-3 col-lg-3 mt-4">
+          <div class="item spirit col-6 col-md-4 col-xl-3 mt-4">
             <div class="item-wrap fancybox rounded">
               <div class="work-info">
-                <h3>{{ item.brand }} {{ item.product }}</h3>
+                <h4>{{ item.brand }} {{ item.product }}</h4>
                 <div class="item-desc">{{ item.volume }}{{ item.unit }}</div>
                 <div class="item-price">${{ item.price }}</div>
               </div>
