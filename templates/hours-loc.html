@@ -1,0 +1,58 @@
+<!-- Extend base layout template -->
+{% extends 'layout.html' %}
+{% block title %}Hours & Location{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block nav_hours %}active{% endblock %}
+{% block hours_bar %}hidden{% endblock %}
+{% block hours_bar2 %}hidden{% endblock %}
+
+<!-- ======= Content ======= -->
+{% block content %}
+
+<div class="container">
+    <div class="row" data-aos="fade-up">
+        <div class="col-12 col-xl-8" style="height: 600px;">
+            <h3>Location</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12320.846090089726!2d-76.6415316!3d39.4645499!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c80df0a989af81%3A0x851438d20bb32178!2sCranbrook%20Liquors!5e0!3m2!1sen!2sus!4v1625719235132!5m2!1sen!2sus" width="100%" height="90%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="col-12 col-xl-4 p-0">
+            <h3>Hours</h3>
+            <table style="min-width: 285px;">
+              <tbody>
+                <tr>
+                  <td class="{% if weekday == 0 %}today{% endif %}">Monday</td>
+                  <td class="{% if weekday == 0 %}today{% endif %}">9:30am-8pm</td>
+                </tr>
+                <tr>
+                  <td class="{% if weekday == 1 %}today{% endif %}">Tuesday</td>
+                  <td class="{% if weekday == 1 %}today{% endif %}">9:30am-8pm</td>
+                </tr>
+                <tr>
+                  <td class="{% if weekday == 2 %}today{% endif %}">Wednesday</td>
+                  <td class="{% if weekday == 2 %}today{% endif %}">9:30am-8pm</td>
+                </tr>
+                <tr>
+                  <td class="{% if weekday == 3 %}today{% endif %}">Thursday</td>
+                  <td class="{% if weekday == 3 %}today{% endif %}">9:30am-8pm</td>
+                </tr>
+                <tr>
+                  <td class="{% if weekday==4 %}today{% endif %}">Friday</td>
+                  <td class="{% if weekday==4 %}today{% endif %}">9:30am-9pm</td>
+                </tr>
+                <tr>
+                  <td class="{% if weekday==5 %}today{% endif %}">Saturday</td>
+                  <td class="{% if weekday==5 %}today{% endif %}">9am-9pm</td>
+                </tr>
+                <tr>
+                  <td class="{% if weekday==6 %}today{% endif %}">Sunday</td>
+                  <td class="{% if weekday==6 %}today{% endif %}">Closed</td>
+                </tr>
+              </tbody>
+              </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

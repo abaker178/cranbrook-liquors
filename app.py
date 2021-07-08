@@ -53,6 +53,7 @@ query_params = {
 }
 
 now = dt.now(pytz.timezone('US/Eastern'))
+weekday = now.weekday()
 
 #######################
 ###### FUNCTIONS ######
@@ -135,7 +136,7 @@ def specials():
     beer = requests.get(f"{api_route}?category=beer").json()
     wine = requests.get(f"{api_route}?category=wine").json()
     spirit = requests.get(f"{api_route}?category=spirit").json()
-    return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit)
+    return render_template("specials.html", month=disp_month, beer=beer, wine=wine, spirit=spirit, weekday=weekday)
 
 # Contact Page
 @app.route("/contact", methods=["GET", "POST"])
@@ -146,12 +147,17 @@ def contact():
         mail.send(message)
         return redirect("thank-you.html", code=302)
 
-    return render_template("contact.html")
+    return render_template("contact.html", weekday=weekday)
+
+# Hours Page
+@app.route("/hours-location")
+def hours():
+    return render_template("hours-loc.html", weekday=weekday)
 
 # Thank You Page
 @app.route("/thank-you")
 def thanks():
-    render_template("thank-you.html")
+    render_template("thank-you.html", weekday=weekday)
 
 # Staff page
 # @app.route("/staff")

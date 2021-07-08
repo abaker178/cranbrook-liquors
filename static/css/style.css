@@ -377,7 +377,7 @@ h1, h2, h3, h4, h5, h6, .font-heading {
 --------------------------------------------------------------*/
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 ul {
@@ -401,6 +401,11 @@ ul li {
 #hours-sidebar {
   position: fixed;
   right: 1em;
+}
+
+.today {
+  font-size: larger;
+  font-weight: bolder;
 }
 
 td {
