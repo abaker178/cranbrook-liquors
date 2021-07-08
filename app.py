@@ -186,7 +186,7 @@ def login():
         login_user(user, remember=remember)
         return redirect("/dashboard")
     
-    return render_template("login.html")
+    return render_template("login.html", weekday=weekday)
 
 
 #### USER ROUTES ####

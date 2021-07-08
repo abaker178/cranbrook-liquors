@@ -26,7 +26,7 @@
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='css/style.css') }}">
   {% endblock %}
 </head>
-<body>
+<body style="overflow-x: hidden;">
   <!-- ======= Navbar ======= -->
   <nav class="navbar navbar-expand-lg navbar-light py-lg-0">
     <div class="container">
@@ -87,25 +87,25 @@
             <li class="nav-item py-0 py-lg-3">
               <a class="nav-link {% block nav_log %}{% endblock %}" href="login">Login</a>
             </li>
-            <div id="hours-navbar" class="d-inline d-lg-none col-lg-2 hours rounded border border-success {% block hours_bar %}{% endblock %}">
+            <div id="hours-navbar" class="d-inline d-lg-none col-lg-2 hours {% block hours_nav %}{% endblock %}">
               <table>
-                <tbody>
+                <tbody class="rounded border border-success">
                   <th>Hours</th>
                   <tr>
-                    <td class="{% if weekday >= 0 and weekday <= 3 %}today{% endif %}">Monday-Thursday</td>
-                    <td class="{% if weekday >= 0 and weekday <= 3 %}today{% endif %}">9:30am-8pm</td>
+                    <td class="{% if weekday|default(7,true) >= 0 and weekday|default(7,true) <= 3 %}today{% endif %}">Monday-Thursday</td>
+                    <td class="{% if weekday|default(7,true) >= 0 and weekday|default(7,true) <= 3 %}today{% endif %}">9:30am-8pm</td>
                   </tr>
                   <tr>
-                    <td class="{% if weekday==4 %}today{% endif %}">Friday</td>
-                    <td class="{% if weekday==4 %}today{% endif %}">9:30am-9pm</td>
+                    <td class="{% if weekday|default(7,true)==4 %}today{% endif %}">Friday</td>
+                    <td class="{% if weekday|default(7,true)==4 %}today{% endif %}">9:30am-9pm</td>
                   </tr>
                   <tr>
-                    <td class="{% if weekday==5 %}today{% endif %}">Saturday</td>
-                    <td class="{% if weekday==5 %}today{% endif %}">9am-9pm</td>
+                    <td class="{% if weekday|default(7,true)==5 %}today{% endif %}">Saturday</td>
+                    <td class="{% if weekday|default(7,true)==5 %}today{% endif %}">9am-9pm</td>
                   </tr>
                   <tr>
-                    <td class="{% if weekday==6 %}today{% endif %}">Sunday</td>
-                    <td class="{% if weekday==6 %}today{% endif %}">Closed</td>
+                    <td class="{% if weekday|default(7,true)==6 %}today{% endif %}">Sunday</td>
+                    <td class="{% if weekday|default(7,true)==6 %}today{% endif %}">Closed</td>
                   </tr>
                 </tbody>
               </table>
@@ -127,42 +127,44 @@
     <!-- ======= Content ======= -->
     <div class="col-12 col-lg-8" id="content">{% block content %}{% endblock %}</div>
 
+    {% if not current_user.is_authenticated %}
     <!-- ======= Hours Bar ======= -->
-    <div id="hours-sidebar" class="d-none d-lg-inline col-lg-2 hours rounded border border-success {% block hours_bar2 %}{% endblock %}">
+    <div id="hours-sidebar" class="d-none d-lg-inline col-lg-2 mx-auto hours rounded border border-success {% block hours_bar %}{% endblock %}" style="max-width: fit-content;">
       <table>
         <tbody>
           <th>Hours</th>
           <tr>
-            <td class="{% if weekday == 0 %}today{% endif %}">Monday</td>
-            <td class="{% if weekday == 0 %}today{% endif %}">9:30am-8pm</td>
+            <td class="{% if weekday|default(7,true) == 0 %}today{% endif %}">Monday</td>
+            <td class="{% if weekday|default(7,true) == 0 %}today{% endif %}">9:30am-8pm</td>
           </tr>
           <tr>
-            <td class="{% if weekday == 1 %}today{% endif %}">Tuesday</td>
-            <td class="{% if weekday == 1 %}today{% endif %}">9:30am-8pm</td>
+            <td class="{% if weekday|default(7,true) == 1 %}today{% endif %}">Tuesday</td>
+            <td class="{% if weekday|default(7,true) == 1 %}today{% endif %}">9:30am-8pm</td>
           </tr>
           <tr>
-            <td class="{% if weekday == 2 %}today{% endif %}">Wednesday</td>
-            <td class="{% if weekday == 2 %}today{% endif %}">9:30am-8pm</td>
+            <td class="{% if weekday|default(7,true) == 2 %}today{% endif %}">Wednesday</td>
+            <td class="{% if weekday|default(7,true) == 2 %}today{% endif %}">9:30am-8pm</td>
           </tr>
           <tr>
-            <td class="{% if weekday == 3 %}today{% endif %}">Thursday</td>
-            <td class="{% if weekday == 3 %}today{% endif %}">9:30am-8pm</td>
+            <td class="{% if weekday|default(7,true) == 3 %}today{% endif %}">Thursday</td>
+            <td class="{% if weekday|default(7,true) == 3 %}today{% endif %}">9:30am-8pm</td>
           </tr>
           <tr>
-            <td class="{% if weekday==4 %}today{% endif %}">Friday</td>
-            <td class="{% if weekday==4 %}today{% endif %}">9:30am-9pm</td>
+            <td class="{% if weekday|default(7,true) == 4 %}today{% endif %}">Friday</td>
+            <td class="{% if weekday|default(7,true) == 4 %}today{% endif %}">9:30am-9pm</td>
           </tr>
           <tr>
-            <td class="{% if weekday==5 %}today{% endif %}">Saturday</td>
-            <td class="{% if weekday==5 %}today{% endif %}">9am-9pm</td>
+            <td class="{% if weekday|default(7,true) == 5 %}today{% endif %}">Saturday</td>
+            <td class="{% if weekday|default(7,true) == 5 %}today{% endif %}">9am-9pm</td>
           </tr>
           <tr>
-            <td class="{% if weekday==6 %}today{% endif %}">Sunday</td>
-            <td class="{% if weekday==6 %}today{% endif %}">Closed</td>
+            <td class="{% if weekday|default(7,true) == 6 %}today{% endif %}">Sunday</td>
+            <td class="{% if weekday|default(7,true) == 6 %}today{% endif %}">Closed</td>
           </tr>
         </tbody>
       </table>
     </div>
+    {% endif %}
   
   </div>
   <!-- ======= Footer ======= -->
